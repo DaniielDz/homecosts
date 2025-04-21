@@ -14,7 +14,9 @@ interface CalculatorPageProps {
 export default async function CalculatorPage({
     params,
 }: CalculatorPageProps) {
-    const { category: categorySlug, calculator: calculatorSlug } = params;
+    const resolvedParams = await Promise.resolve(params);
+
+    const { category: categorySlug, calculator: calculatorSlug } = resolvedParams;
 
     // 1. Obtener la categoría a partir de su slug
     const { data: categoryData, error: categoryError } = await supabase
