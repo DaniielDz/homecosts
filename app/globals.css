@@ -1,6 +1,9 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
+@custom-variant dark (&:is(.dark *));
+
+/* :root {
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -23,4 +26,58 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+} */
+
+
+/* global.css o tu archivo principal de estilos */
+
+input[type="range"].range-minimal {
+  -webkit-appearance: none;
+  /* Elimina los estilos por defecto en Safari */
+  appearance: none;
+  background-color: #e2e2e2;
+  /* color de la barra */
+  height: 4px;
+  /* alto de la barra */
+  border-radius: 2px;
+  /* suaviza esquinas de la barra */
+}
+
+/* la pista (track) para navegadores WebKit */
+input[type="range"].range-minimal::-webkit-slider-runnable-track {
+  height: 4px;
+  background-color: #e2e2e2;
+  border-radius: 2px;
+}
+
+/* el dedo (thumb) para navegadores WebKit */
+input[type="range"].range-minimal::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  background-color: #42bff5;
+  /* color minimalista, cambia al gusto */
+  border-radius: 4px;
+  /* un sutil cuadrado con bordes ligeramente redondeados */
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+  margin-top: -6px;
+  /* alinea el thumb con la pista */
+  cursor: pointer;
+}
+
+/* Para navegadores que usan Mozilla (Firefox) */
+input[type="range"].range-minimal::-moz-range-track {
+  height: 4px;
+  background-color: #e2e2e2;
+  border-radius: 2px;
+}
+
+input[type="range"].range-minimal::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  background-color: #42bff5;
+  border-radius: 4px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
