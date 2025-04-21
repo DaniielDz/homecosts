@@ -10,7 +10,7 @@ interface CalculatorPageProps {
         calculator: string
     }>
     // solo si usas searchParams:
-    searchParams?: Record<string, string | string[] | undefined>
+    searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }
 
 export default async function CalculatorPage({
