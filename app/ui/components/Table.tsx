@@ -43,8 +43,8 @@ const Table = ({ items, name, type, inputLabel, results, qtyValue, duv }: TableP
         return acc + (parseFloat(results[index]?.hi_val as string) || 0);
     }, 0);
 
-    const avgLow = totalLow / qtyValue;
-    const avgHigh = totalHigh / qtyValue;
+    const avgLow = qtyValue ? totalLow / qtyValue : 0;
+    const avgHigh = qtyValue ? totalHigh / qtyValue : 0;
     
     
 
