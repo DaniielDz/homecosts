@@ -11,9 +11,9 @@ interface SliderProps {
 export default function Slider({ label, sliderValues, variables, value, onChange }: SliderProps) {
   // Determinar etiquetas según id
   let tags: string[] = [];
-  if (sliderValues.id === 'slider-1') tags = variables.ll;
-  if (sliderValues.id === 'slider-2') tags = variables.ml;
-  if (sliderValues.id === 'slider-4') tags = variables.jl;
+  if (sliderValues.id === 'slider-1' && Array.isArray(variables.ll)) tags = variables.ll.filter((item): item is string => typeof item === 'string');
+  if (sliderValues.id === 'slider-2' && Array.isArray(variables.ml)) tags = variables.ml.filter((item): item is string => typeof item === 'string');
+  if (sliderValues.id === 'slider-4' && Array.isArray(variables.jl)) tags = variables.jl.filter((item): item is string => typeof item === 'string');
 
   const display =
     sliderValues.id !== 'slider-3'
