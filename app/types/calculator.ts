@@ -46,6 +46,12 @@ export interface NormalCalculator extends Calculator {
     avgLabel: string;
     variables: CalculatorVariables
     functions: string;
+    sliders_values: {
+        min: number;
+        max: number;
+        step: number;
+        id: string;
+    }[]
 }
 
 export interface SlidersCalculator extends Calculator {
