@@ -156,9 +156,9 @@ export default function Calculator({ calculator }: { calculator: AnyCalculator }
         jv = [],
       } = calculator.variables;
 
-      let w2 = lv[0] || calculator.variables.w2,
-        p2 = mv[0] || calculator.variables.p2,
-        w4 = jv[0] || calculator.variables.w4,
+      let w2 = Array.isArray(lv) && lv.length > 0 ? lv[0] : calculator.variables.w2,
+        p2 = Array.isArray(mv) && mv.length > 0 ? mv[0] : calculator.variables.p2,
+        w4 = Array.isArray(jv) && jv.length > 0 ? jv[0] : calculator.variables.w4,
         qVal = calculator.variables.qVal;
       Object.entries(sliderValues).forEach(([sliderId, value]) => {
         const index = Math.min(
