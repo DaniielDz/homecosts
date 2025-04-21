@@ -225,15 +225,23 @@ export default function Calculator({ calculator }: { calculator: AnyCalculator }
       setDuv(duv);
     } else if (calculator.type === "SLIDERS") {
       const results = getSlidersResults();
-      setResults(results);
+      setResults(Array.isArray(results) ? results : [results]);
     } else if (calculator.type === "SELECTS_SLIDERS") {
       const { qt, rv, cv, qVal } = calculator.variables
-      const { qRes, qValRes } = computeQ({
-        qt, rv, cv, selectValues, qVal
+      const computeQResult = computeQ({
+        qt: typeof qt === 'number' ? qt : 0, // Ensure qt is a number
+        rv: Array.isArray(rv) && rv.every(item => typeof item === 'number') ? rv : [], // Ensure rv is an array of numbers
+        cv: Array.isArray(cv) && cv.every(item => typeof item === 'number') ? cv : [], // Ensure cv is an array of numbers
+        selectValues: selectValues ?? [], // Ensure selectValues is an array of numbers
+        initialQVal: typeof qVal === 'number' ? qVal : 0, // Ensure qVal is a number
       });
 
-      const results = getSelectsResults(qRes, qValRes);
-      setResults(results);
+      if (computeQResult) {
+        const { qRes, qValRes } = computeQResult;
+        const results = getSelectsResults(qRes, qValRes);
+        setResults(Array.isArray(results) ? results : [results]);
+      }
+
     }
   }, [zipData, qtyValue, selectValues, sliderValues]);
 
