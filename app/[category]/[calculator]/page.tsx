@@ -5,11 +5,19 @@ import Link from 'next/link';
 import { AnyCalculator } from '@/app/types/calculator';
 
 interface CalculatorPageProps {
-    params: { category: string; calculator: string };
+    params: Promise<{
+        category: string
+        calculator: string
+    }>
+    // solo si usas searchParams:
+    searchParams?: Record<string, string | string[] | undefined>
 }
 
-export default async function CalculatorPage({ params }: CalculatorPageProps) {
-
+export default async function CalculatorPage({
+    params,
+    searchParams,
+}: CalculatorPageProps) {
+    // Desestructuramos los valores esperando la promesa
     const { category: categorySlug, calculator: calculatorSlug } = await params;
 
     // 1. Obtener la categoría a partir de su slug
