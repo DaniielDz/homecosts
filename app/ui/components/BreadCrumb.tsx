@@ -1,7 +1,16 @@
 import Link from "next/link";
 import React from "react";
 
-const Breadcrumb = ({ items }) => {
+type BreadcrumbItem = {
+    name: string;
+    href: string;
+};
+
+type BreadcrumbProps = {
+    items: BreadcrumbItem[];
+};
+
+const Breadcrumb = ({ items }: BreadcrumbProps) => {
     return (
         <div className="flex items-center text-sm text-[#2563EB]">
             {items.map((item, index) => (
