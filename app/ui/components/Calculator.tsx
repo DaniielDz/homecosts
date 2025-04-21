@@ -42,7 +42,7 @@ export default function Calculator({ calculator }: { calculator: AnyCalculator }
         const errText = await response.json();
         throw new Error(errText.error);
       }
-      const data: number = await response.json();
+      const data = await response.json();
       setZipData(data.value);
       setError("");
     } catch (err: any) {
