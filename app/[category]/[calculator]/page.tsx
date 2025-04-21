@@ -4,19 +4,13 @@ import Calculator from '@/app/ui/components/Calculator';
 import Link from 'next/link';
 import { AnyCalculator } from '@/app/types/calculator';
 
-interface CalculatorPageProps {
-    params: {
-        category: string
-        calculator: string
-    }
-}
 
-export default async function CalculatorPage({
-    params,
-}: CalculatorPageProps) {
-    const resolvedParams = await Promise.resolve(params);
+type Params = Promise<{ category: string, calculator: string }>
 
-    const { category: categorySlug, calculator: calculatorSlug } = resolvedParams;
+
+export default async function CalculatorPage(props: { params: Params }) {
+    const params = await props.params;
+    const { category: categorySlug, calculator: calculatorSlug } = params;
 
     // 1. Obtener la categoría a partir de su slug
     const { data: categoryData, error: categoryError } = await supabase
