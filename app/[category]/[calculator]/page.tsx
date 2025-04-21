@@ -3,17 +3,17 @@ import Breadcrumb from '@/app/ui/components/BreadCrumb';
 import Calculator from '@/app/ui/components/Calculator';
 import Link from 'next/link';
 import { AnyCalculator } from '@/app/types/calculator';
-
-interface CalculatorPageProps {
-    params: {
-        category: string
-        calculator: string
-    }
-}
+import { Params } from 'next/dist/server/request/params';
+// import { type Params } from 'next/dist/shared/lib/router/utils/route-matcher'
 
 export default async function CalculatorPage({
     params,
-}: CalculatorPageProps) {
+}: {
+    params: Params & {
+        category: string
+        calculator: string
+    }
+}) {
     // Desestructuramos los valores esperando la promesa
     const { category: categorySlug, calculator: calculatorSlug } = params;
 
