@@ -2,13 +2,12 @@ import { supabase } from "../lib/supabase";
 import { SubCategory } from "../types/subCategory";
 import SubCategoryCard from "../ui/components/SubCategoryCard";
 
-interface CategoryPageProps {
-  params: { category: string };
-}
+type Params = Promise<{ category: string}>
 
-export default async function CategoryPage({ params }: CategoryPageProps) {
-  const resolvedParams = await Promise.resolve(params);
-  const categorySlug = resolvedParams.category;
+
+export default async function CategoryPage(props: { params: Params }) {
+  const params = await props.params;
+  const { category: categorySlug } = params;
 
   const { data: categoryData, error: categoryError } = await supabase
     .from("categories")
