@@ -2,14 +2,11 @@ import React from 'react';
 import { CalcRow } from './CalcRow';
 import { useState, useEffect } from 'react';
 import { roundNumber, roundToTwoDecimals } from '@/app/utils/functions';
+import { Table_Item } from '@/app/types/calculator';
 
-type Item = {
-    item_title: string;
-    item_desc: string;
-}
 
 interface TableProps {
-    items: Item[],
+    items: Table_Item[],
     name: string,
     type: string,
     inputLabel?: string,

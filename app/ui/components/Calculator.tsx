@@ -1,6 +1,6 @@
 'use client';
 
-import { AnyCalculator } from "@/app/types/calculator";
+import { AnyCalculator, Table_Item } from "@/app/types/calculator";
 import { Button } from "./Button";
 import { Input } from "./Input";
 import Table from "./Table";
@@ -285,7 +285,7 @@ export default function Calculator({ calculator }: { calculator: AnyCalculator }
       </form>
       {error && <p className="text-red-500 font-bold">{error}</p>}
       <Table
-        items={calculator.items}
+        items={calculator.items.filter((item): item is Table_Item => 'item_title' in item && 'item_desc' in item)}
         name={calculator.title}
         type={calculator.type}
         results={results}

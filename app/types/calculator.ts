@@ -3,6 +3,10 @@ type Item = {
     description: string;
 }
 
+export type Table_Item = {
+    item_title: string;
+    item_desc: string;
+}
 // type summaryItem = {
 //     tag: string;
 //     text: string;
@@ -34,7 +38,7 @@ export interface Calculator {
     name: string;
     title: string;
     slug: string;
-    items: Item[];
+    items: Item[] | Table_Item[];
     summarycontent: summaryList[];
     // summarycontent: (summaryItem | summaryList)[];
 }
