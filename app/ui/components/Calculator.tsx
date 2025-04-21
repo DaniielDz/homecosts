@@ -52,36 +52,22 @@ export default function Calculator({ calculator }: { calculator: AnyCalculator }
 
   const getNormalResults = (calculatorFN: string) => {
     const guv = createFunctionFromString(calculatorFN)
-    const {
-      fq,
-      ib,
-      ilp,
-      num_items,
-      qx,
-      vmax,
-      vmin,
-      vq,
-      w1,
-      w2,
-      w3,
-      w4,
-      hm } = calculator.variables
 
     const response = uc1({
       bq: qtyValue,
-      fq,
-      ib,
-      ilp,
-      num_items,
-      qx,
-      vmax,
-      vmin,
-      vq,
-      w1: zipData,
-      w2,
-      w3,
-      w4,
-      hm,
+      fq: Array.isArray(calculator.variables.fq) ? calculator.variables.fq.filter((item): item is number => typeof item === 'number') : [],
+      ib: Array.isArray(calculator.variables.ib) ? calculator.variables.ib.filter((item): item is string => typeof item === 'string') : [],
+      ilp: Array.isArray(calculator.variables.ilp) ? calculator.variables.ilp.filter((item): item is number => typeof item === 'number') : [],
+      num_items: typeof calculator.variables.num_items === 'number' ? calculator.variables.num_items : 0,
+      qx: typeof calculator.variables.qx === 'number' ? calculator.variables.qx : 0,
+      vmax: Array.isArray(calculator.variables.vmax) ? calculator.variables.vmax.filter((item): item is number => typeof item === 'number') : [],
+      vmin: Array.isArray(calculator.variables.vmin) ? calculator.variables.vmin.filter((item): item is number => typeof item === 'number') : [],
+      vq: Array.isArray(calculator.variables.vq) ? calculator.variables.vq.filter((item): item is number => typeof item === 'number') : [],
+      w1: zipData ?? 0,
+      w2: typeof calculator.variables.w2 === 'number' ? calculator.variables.w2 : 0,
+      w3: typeof calculator.variables.w3 === 'number' ? calculator.variables.w3 : 0,
+      w4: typeof calculator.variables.w4 === 'number' ? calculator.variables.w4 : 0,
+      hm: typeof calculator.variables.hm === 'number' ? calculator.variables.hm : 0,
       guv
     })
     const duv = guv(qtyValue)
