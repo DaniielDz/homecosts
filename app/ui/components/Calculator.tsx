@@ -163,21 +163,27 @@ export default function Calculator({ calculator }: { calculator: AnyCalculator }
       Object.entries(sliderValues).forEach(([sliderId, value]) => {
         const index = Math.min(
           Math.round(Number(value)),
-          Math.max(...[lv, mv, jv].map(arr => arr.length - 1))
+          Math.max(...[lv, mv, jv].map(arr => (Array.isArray(arr) ? arr.length - 1 : 0)))
         );
 
         switch (sliderId) {
           case 'slider-1':
-            w2 = lv[index];
+            if (Array.isArray(lv)) {
+              w2 = lv[index];
+            }
             break;
           case 'slider-2':
-            p2 = mv[index];
+            if (Array.isArray(mv)) {
+              p2 = mv[index];
+            }
             break;
           case 'slider-3':
             qVal = Math.max(Number(value), 1);
             break;
           case 'slider-4':
-            w4 = jv[index];
+            if (Array.isArray(jv)) {
+              w4 = jv[index];
+            }
             break;
         }
       });
@@ -215,7 +221,7 @@ export default function Calculator({ calculator }: { calculator: AnyCalculator }
 
     if (calculator.type === "NORMAL") {
       const { finalResults, duv } = getNormalResults(calculator.functions);
-      setResults(finalResults);
+      setResults(finalResults || []);
       setDuv(duv);
     } else if (calculator.type === "SLIDERS") {
       const results = getSlidersResults();
