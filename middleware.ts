@@ -5,7 +5,7 @@ import { createClient } from '@supabase/supabase-js'
 // 1) Asegúrate de que corre en Edge:
 export const config = {
     matcher: ['/:category/:calculator'],
-    runtime: 'edge',
+    runtime: 'experimental-edge',
 }
 
 // 2) Inicializa supabase-js compatible con Edge:
