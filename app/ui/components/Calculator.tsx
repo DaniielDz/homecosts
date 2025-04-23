@@ -12,8 +12,20 @@ import { computeQ, uc1 } from "@/app/utils/functions";
 import { convertUCtoTS } from "@/app/utils/convertUC";
 
 
-export default function Calculator({ calculator }: { calculator: AnyCalculator }) {
-  const [zipCodeValue, setZipCodeValue] = useState<number>(10001);
+export default function Calculator({
+  calculator,
+  cityZipCode,
+  onChangeQty,
+  onChangeLowCost,
+  onChangeHighCost
+}: {
+  calculator: AnyCalculator,
+  cityZipCode?: number
+  onChangeQty: (value: number) => void,
+  onChangeLowCost: (value: number) => void,
+  onChangeHighCost: (value: number) => void,
+}) {
+  const [zipCodeValue, setZipCodeValue] = useState<number>(cityZipCode || 10001);
   const [qtyValue, setQtyValue] = useState<number>(1);
   const [sliderValues, setSliderValues] = useState<Record<string, number>>(() => {
     const init: Record<string, number> = {};
@@ -25,6 +37,7 @@ export default function Calculator({ calculator }: { calculator: AnyCalculator }
   const [zipData, setZipData] = useState<number | null>(null);
   const [results, setResults] = useState<Array<Record<string, any>>>([]);
   const [duv, setDuv] = useState<string>("");
+  const [render, setRender] = useState<number>(0)
 
   const fetchZipCodeValue = async () => {
     if (!zipCodeValue) {
@@ -52,7 +65,7 @@ export default function Calculator({ calculator }: { calculator: AnyCalculator }
 
   const getNormalResults = (calculatorFN: string) => {
     const guv = createFunctionFromString(calculatorFN)
-
+    onChangeQty(qtyValue);
     const response = uc1({
       bq: qtyValue,
       fq: Array.isArray(calculator.variables.fq) ? calculator.variables.fq.filter((item): item is number => typeof item === 'number') : [],
@@ -77,12 +90,12 @@ export default function Calculator({ calculator }: { calculator: AnyCalculator }
   }
 
   const getSelectsResults = (q = calculator.variables.q, qVal = 1) => {
+    onChangeQty(qVal);
     try {
       const {
         lv,
         mv,
-        jv,
-        qu
+        jv
       } = calculator.variables;
 
       let w2 = Array.isArray(lv) && lv.length > 0 ? lv[0] : calculator.variables.w2,
@@ -109,7 +122,6 @@ export default function Calculator({ calculator }: { calculator: AnyCalculator }
             break;
 
           case 'slider-3':
-            // este siempre corre, pues no depende de un array
             qVal = Math.max(Number(value), 1);
             break;
 
@@ -134,9 +146,7 @@ export default function Calculator({ calculator }: { calculator: AnyCalculator }
 
       const uc = convertUCtoTS(calculator.functions, calculator.variables);
       const results = uc(safeParams);
-
       return results;
-
     } catch (error) {
       console.error("Error:", {
         error,
@@ -179,6 +189,7 @@ export default function Calculator({ calculator }: { calculator: AnyCalculator }
             break;
           case 'slider-3':
             qVal = Math.max(Number(value), 1);
+            onChangeQty(qVal);
             break;
           case 'slider-4':
             if (Array.isArray(jv)) {
@@ -222,10 +233,51 @@ export default function Calculator({ calculator }: { calculator: AnyCalculator }
     if (calculator.type === "NORMAL") {
       const { finalResults, duv } = getNormalResults(calculator.functions);
       setResults(finalResults || []);
+      const calculateTotals = (
+        finalResults: Array<{
+          index: number;
+          mq?: number;
+          lq: number;
+          unit: string;
+          low_val: number;
+          hi_val: number;
+          type: string;
+        }> | undefined
+      ) => {
+        if (!finalResults || finalResults.length === 0) {
+          return { totalLow: 0, totalHigh: 0 };
+        }
+
+        const totals = finalResults.reduce(
+          (acc, item) => {
+            acc.totalLow += item.low_val;
+            acc.totalHigh += item.hi_val;
+            return acc;
+          },
+          { totalLow: 0, totalHigh: 0 }
+        );
+
+        return totals;
+      };
+
+      if (render === 0) {
+        const { totalLow, totalHigh } = calculateTotals(finalResults);
+        onChangeLowCost((Math.round(totalLow)));
+        onChangeHighCost((Math.round(totalHigh)));
+        setRender(1)
+      }
+
       setDuv(duv);
     } else if (calculator.type === "SLIDERS") {
       const results = getSlidersResults();
       setResults(Array.isArray(results) ? results : [results]);
+      
+      if(render === 0) {
+        onChangeLowCost(results[3].z12);
+        onChangeHighCost(results[3].z13);
+        setRender(1)
+      }
+      
     } else if (calculator.type === "SELECTS_SLIDERS") {
       const { qt, rv, cv, qVal } = calculator.variables
       const computeQResult = computeQ({
@@ -242,6 +294,11 @@ export default function Calculator({ calculator }: { calculator: AnyCalculator }
         setResults(Array.isArray(results) ? results : [results]);
       }
 
+      if(render === 0) {
+        onChangeLowCost(results[3].z12);
+        onChangeHighCost(results[3].z13);
+        setRender(1)
+      }
     }
   }, [zipData, qtyValue, selectValues, sliderValues]);
 

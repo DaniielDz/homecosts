@@ -12,7 +12,7 @@ export type Table_Item = {
 //     text: string;
 // }
 
-type summaryLink = {
+export type summaryLink = {
     tag: string;
     url: string;
     text: string;

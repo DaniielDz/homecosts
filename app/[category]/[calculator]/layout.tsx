@@ -46,10 +46,13 @@ export async function generateMetadata(
 
 export default async function CalculatorLayout({
   children,
-  params,
 }: LayoutContext) {
   // si necesitaras usar params aquí:
   // const { category, calculator } = await params
 
-  return <>{children}</>
+  return (
+    <article className="flex flex-col gap-10 max-w-[875px] mx-auto p-4 text-[#374151]">
+      {children}
+    </article>
+  )
 }
