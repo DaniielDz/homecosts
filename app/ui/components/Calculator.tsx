@@ -269,8 +269,8 @@ export default function Calculator({
 
       setDuv(duv);
     } else if (calculator.type === "SLIDERS") {
-      const results = getSlidersResults();
-      setResults(Array.isArray(results) ? results : [results]);
+      const res = getSlidersResults();
+      setResults(Array.isArray(res) ? res : [res]);
       
       if(render === 0) {
         onChangeLowCost(results[3].z12);
