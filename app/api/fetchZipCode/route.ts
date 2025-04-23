@@ -1,4 +1,3 @@
-// app/api/fetchZipCode/route.ts
 import { supabase } from '@/app/lib/supabase';
 import { NextResponse } from 'next/server';
 

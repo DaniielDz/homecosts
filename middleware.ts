@@ -20,6 +20,11 @@ const supabase = createClient(
 
 export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl
+    // Llamadas AJAX a /api y rutas internas
+    if (pathname.startsWith('/api') || pathname.startsWith('/_next') || pathname === '/favicon.ico') {
+        return NextResponse.next()
+    }
+
     const match = pathname.match(/^\/([^\/]+)\/([^\/]+)$/)
     if (!match) return NextResponse.next()
     const [, category, calculator] = match
@@ -39,7 +44,7 @@ export async function middleware(request: NextRequest) {
     const lonH = request.headers.get('x-vercel-ip-longitude')
     const latitude = latH ? parseFloat(latH) : NaN
     const longitude = lonH ? parseFloat(lonH) : NaN
-    
+
     if (isNaN(latitude) || isNaN(longitude)) {
         return NextResponse.next()
     }
