@@ -1,24 +1,26 @@
 import { CalculatorVariables } from "../types/calculator";
 import { createHelpers } from "./helpers";
 
-interface CalculationResult {
-    u: {
-        u11: string;
-        u12: string;
-        u13: string;
-    };
-    v: {
+export type CalculationResult = [
+    {
         v11: string;
         v12: string;
         v13: string;
+    },
+    {
+        u11: string;
+        u12: string;
+        u13: string;
+    },
+    {
         v22: string;
         v23: string;
-    };
-    z: {
+    },
+    {
         z12: string;
         z13: string;
-    };
-}
+    }
+]
 
 export const convertUCtoTS = (
     ucFunctionString: string,

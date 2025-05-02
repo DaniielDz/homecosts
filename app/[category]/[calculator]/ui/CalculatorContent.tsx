@@ -43,15 +43,13 @@ export default function CalculatorContent({
     }
     else if (calculator.type === "SELECTS_SLIDERS") qtyLabel = "Quantity"
 
-    // qty tiene que ser segun lo que cambia el usuario
     const [qty, setQty] = useState<number>(1)
-    // low y high debe ser segun el resultado que le de al usuario o lo que carga inicialmente
-    const [lowCost, setLowCost] = useState<number>(0)
-    const [highCost, setHighCost] = useState<number>(0)
+    const [lowCost, setLowCost] = useState<number | string>(0)
+    const [highCost, setHighCost] = useState<number | string>(0)
 
 
     return (
-        <>
+        <article className="flex flex-col gap-10 max-w-[875px] p-4 pl-0 text-[#374151]">
             <Breadcrumb items={[
                 { name: "Home", href: "/" },
                 { name: category.name || "Unknown Category", href: `/${category.slug || ""}` },
@@ -86,6 +84,6 @@ export default function CalculatorContent({
             />
             <FaqSection calculatorName={calculator.name} />
             <ReferencesSection references={references} />
-        </>
+        </article>
     )
 }

@@ -4,6 +4,7 @@ import { AnyCalculator } from "@/app/types/calculator";
 import { getCalculator } from "../lib/getCalculator";
 import CalculatorContent from "../ui/CalculatorContent";
 import { supabase } from "@/app/lib/supabase";
+import { AsideContent } from "../ui/AsideContent";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 86400; // cache 24 h
@@ -18,10 +19,11 @@ export default async function CityPage(props: { params: Params }) {
     let categoryData: Category;
     let subCategoryData: SubCategory;
     let fullCalculator: AnyCalculator;
+    let relatedCalculators: AnyCalculator[];
 
     try {
         const result = await getCalculator(categorySlug, calculatorSlug);
-        ({ categoryData, subCategoryData, fullCalculator } = result);
+        ({ categoryData, subCategoryData, fullCalculator, relatedCalculators } = result);
     } catch (error) {
         return (
             <div className="p-4 text-red-600">
@@ -46,11 +48,19 @@ export default async function CityPage(props: { params: Params }) {
     }
 
     return (
-        <CalculatorContent
-            category={categoryData}
-            subCategory={subCategoryData}
-            calculator={fullCalculator}
-            cityInfo={cityRecord}
-        />
+        <div className='flex justify-center'>
+            <AsideContent
+                categorySlug={categorySlug}
+                relatedCalculators={relatedCalculators}
+                citySlug={citySlug}
+                calculatorName={fullCalculator.name ?? "Calculator"}
+            />
+            <CalculatorContent
+                category={categoryData}
+                subCategory={subCategoryData}
+                calculator={fullCalculator}
+                cityInfo={cityRecord}
+            />
+        </div>
     );
 }

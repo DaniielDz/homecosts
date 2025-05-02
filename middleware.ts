@@ -56,10 +56,6 @@ export async function middleware(request: NextRequest) {
             lon_input: longitude,
         })
 
-    console.log("Lat/Lng:", latitude, longitude)
-    console.log("RPC result:", data)
-    console.log("RPC error:", error)
-
     // Si algo falla o no hay datos, seguimos sin redirigir.
     if (error || !data || (Array.isArray(data) && data.length === 0)) {
         return NextResponse.next()

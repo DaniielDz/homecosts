@@ -1,9 +1,7 @@
-// app/[category]/[calculator]/layout.tsx
 import { ReactNode } from 'react'
 import { Metadata } from 'next'
 import { supabase } from '@/app/lib/supabase'
 
-/** Contexto para generateMetadata: params es Promise */
 interface GenMetaContext {
   params: Promise<{
     category: string
@@ -11,7 +9,6 @@ interface GenMetaContext {
   }>
 }
 
-/** Contexto para Layout: params es Promise */
 interface LayoutContext {
   children: ReactNode
   params: Promise<{
@@ -47,12 +44,10 @@ export async function generateMetadata(
 export default async function CalculatorLayout({
   children,
 }: LayoutContext) {
-  // si necesitaras usar params aquí:
-  // const { category, calculator } = await params
 
   return (
-    <article className="flex flex-col gap-10 max-w-[875px] mx-auto p-4 text-[#374151]">
+    <>
       {children}
-    </article>
+    </>
   )
 }

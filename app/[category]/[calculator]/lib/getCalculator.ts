@@ -7,6 +7,7 @@ type CalculatorResult = {
     categoryData: Category;
     subCategoryData: SubCategory;
     fullCalculator: AnyCalculator;
+    relatedCalculators: AnyCalculator[];
 };
 
 export async function getCalculator(
@@ -93,5 +94,15 @@ export async function getCalculator(
         throw new Error("Error loading calculator subcategory");
     }
 
-    return { categoryData, subCategoryData, fullCalculator };
+    // SEGUN LA SUBCATEGORIA OBTENER TODAS LAS CALCULADORAS RELACIONADAS
+    const { data: relatedCalculators, error: relatedError } = await supabase
+        .from("calculators")
+        .select("*")
+        .eq("subcategory_id", subCategoryData.id)
+        .neq("slug", calculatorSlug);
+    if (relatedError || !relatedCalculators) {
+        throw new Error("Error loading related calculators");
+    }
+
+    return { categoryData, subCategoryData, fullCalculator, relatedCalculators };
 }

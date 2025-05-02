@@ -20,6 +20,7 @@ export function NotesSection({
     highCost: number | string
 }) {
 
+
     return (
         <section className='flex flex-col gap-4'>
             <h2 className='text-[#111827] text-2xl font-semibold'>Notes for {calculatorName}</h2>

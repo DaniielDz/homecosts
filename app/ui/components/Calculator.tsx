@@ -9,7 +9,7 @@ import SelectsTable from "./SelectsTable";
 import { useEffect, useState } from "react";
 import { createFunctionFromString } from "@/app/utils/createFnFromString";
 import { computeQ, uc1 } from "@/app/utils/functions";
-import { convertUCtoTS } from "@/app/utils/convertUC";
+import { CalculationResult, convertUCtoTS } from "@/app/utils/convertUC";
 
 
 export default function Calculator({
@@ -22,8 +22,8 @@ export default function Calculator({
   calculator: AnyCalculator,
   cityZipCode?: number
   onChangeQty: (value: number) => void,
-  onChangeLowCost: (value: number) => void,
-  onChangeHighCost: (value: number) => void,
+  onChangeLowCost: (value: number | string) => void,
+  onChangeHighCost: (value: number | string) => void,
 }) {
   const [zipCodeValue, setZipCodeValue] = useState<number>(cityZipCode || 10001);
   const [qtyValue, setQtyValue] = useState<number>(1);
@@ -269,15 +269,15 @@ export default function Calculator({
 
       setDuv(duv);
     } else if (calculator.type === "SLIDERS") {
-      const res = getSlidersResults();
+      const res: CalculationResult = getSlidersResults();
       setResults(Array.isArray(res) ? res : [res]);
-      
+
       if(render === 0) {
-        onChangeLowCost(results[3].z12);
-        onChangeHighCost(results[3].z13);
+        onChangeLowCost(res[3].z12);
+        onChangeHighCost(res[3].z13);
         setRender(1)
       }
-      
+
     } else if (calculator.type === "SELECTS_SLIDERS") {
       const { qt, rv, cv, qVal } = calculator.variables
       const computeQResult = computeQ({
@@ -288,15 +288,17 @@ export default function Calculator({
         initialQVal: typeof qVal === 'number' ? qVal : 0, // Ensure qVal is a number
       });
 
+      let res;
+
       if (computeQResult) {
         const { qRes, qValRes } = computeQResult;
-        const results = getSelectsResults(qRes, qValRes);
-        setResults(Array.isArray(results) ? results : [results]);
+        res = getSelectsResults(qRes, qValRes);
+        setResults(Array.isArray(res) ? res : [res]);
       }
 
-      if(render === 0) {
-        onChangeLowCost(results[3].z12);
-        onChangeHighCost(results[3].z13);
+      if (render === 0 && res) {        
+        onChangeLowCost(res[3].z12);
+        onChangeHighCost(res[3].z13);
         setRender(1)
       }
     }
