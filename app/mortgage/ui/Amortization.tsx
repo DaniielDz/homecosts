@@ -51,7 +51,7 @@ export function Amortization({
                 <AmortizationCard title="Total cost of loan" value={`$${formatNumber(summary.totalCost, 0)}`} />
                 <AmortizationCard title="Payoff date" value={summary.payoffDate} />
             </div>
-            <div className="flex flex-col lg:flex-row items-center gap-10 mt-10">
+            <div className="w-full flex flex-col lg:flex-row items-center gap-10 mt-10">
                 <LinealChart
                     data={lineChartData}
                     xKey="date"

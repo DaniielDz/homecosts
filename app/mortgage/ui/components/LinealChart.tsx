@@ -49,8 +49,8 @@ export function LinealChart({
     : ""
 
   return (
-    <div>
-      <Card className="border-none p-0 shadow-none">
+    <div className="w-full">
+      <Card className="w-full border-none p-0 shadow-none">
         <CardContent className="p-0">
           <ChartContainer className="w-full h-64" config={{}}>
             <LineChart
