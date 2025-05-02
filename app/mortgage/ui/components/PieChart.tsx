@@ -37,7 +37,7 @@ export function PieChartText({ data, total, label = "/mo" }: PieChartTextProps) 
                     {payload.map((entry, idx) => {
                       const name = entry.name as string
                       const value = entry.value as number
-                      const {label: lbl } = config[name]
+                      const { label: lbl } = config[name]
                       const fill = (entry.payload as { fill: string }).fill
                       return (
                         <div key={idx} className="flex items-center gap-2">
@@ -65,14 +65,20 @@ export function PieChartText({ data, total, label = "/mo" }: PieChartTextProps) 
               ))}
               <Label
                 content={({ viewBox }) => {
-                  if (!viewBox || typeof viewBox.cx !== 'number') return null
-                  return (
-                    <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
-                      <tspan className="fill-foreground text-lg font-semibold text-gray-900">
-                        ${formatNumber(total, 0)} <tspan className="text-sm font-normal">{label}</tspan>
-                      </tspan>
-                    </text>
-                  )
+                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                    return (
+                      <text
+                        x={viewBox.cx}
+                        y={viewBox.cy}
+                        textAnchor="middle"
+                        dominantBaseline="middle"
+                      >
+                        <tspan x={viewBox.cx} y={viewBox.cy} className="fill-foreground text-lg font-semibold text-gray-900">
+                          ${formatNumber(total, 0)} <tspan className="text-sm font-normal">{label}</tspan>
+                        </tspan>
+                      </text>
+                    )
+                  }
                 }}
               />
             </Pie>
