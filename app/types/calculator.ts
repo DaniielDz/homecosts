@@ -33,7 +33,7 @@ export type CalculatorVariables = {
 
 export interface Calculator {
     id: number;
-    subCategoryId: number;
+    subcategory_id: number;
     type: "NORMAL" | "SLIDERS" | "SELECTS_SLIDERS";
     name: string;
     title: string;
