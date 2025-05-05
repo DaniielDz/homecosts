@@ -58,7 +58,7 @@ export const convertUCtoTS = (
         let z12 = '', z13 = '';
 
         const calculation = new Function(
-            'vars', 'iv', 'mq', 'f0',
+            'vars', 'iv', 'mq', 'f0', 'vm',
             `
             // Variables internas
             let s1 = 0, s2 = 0, lq = 0, z1 = 0, z2 = 0, p1 = 0;
@@ -70,7 +70,13 @@ export const convertUCtoTS = (
             w4,
             q,
             qVal,
-            p2
+            p2,
+            vxl,
+            vxm,
+            vxs,
+            vxd,
+            vxe,
+            z
             } = vars;
     
             // Recuperar variables de UI desde el closure
@@ -98,7 +104,8 @@ export const convertUCtoTS = (
             allVariables,
             helpers.iv,
             (v: number, u: string) => helpers.mq(v, u),
-            helpers.f0
+            helpers.f0,
+            helpers.vm
         );
     };
 };

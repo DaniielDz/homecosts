@@ -272,7 +272,7 @@ export default function Calculator({
       const res: CalculationResult = getSlidersResults();
       setResults(Array.isArray(res) ? res : [res]);
 
-      if(render === 0) {
+      if (render === 0) {
         onChangeLowCost(res[3].z12);
         onChangeHighCost(res[3].z13);
         setRender(1)
@@ -296,7 +296,7 @@ export default function Calculator({
         setResults(Array.isArray(res) ? res : [res]);
       }
 
-      if (render === 0 && res) {        
+      if (render === 0 && res) {
         onChangeLowCost(res[3].z12);
         onChangeHighCost(res[3].z13);
         setRender(1)
@@ -354,15 +354,16 @@ export default function Calculator({
       />
       {calculator.type === "SLIDERS" && (
         <div className="flex flex-col mx-auto gap-4 w-100">
-          {calculator.labels.map((label, idx) => {
-            const cfg = calculator.sliders_values[idx];
+          {calculator.sliders_values?.map((cfg, idx) => {
+            const label = calculator.labels[idx] ?? "";       // etiqueta si existe
             return (
               <Slider
                 key={cfg.id}
                 label={label}
                 sliderValues={cfg}
                 variables={calculator.variables}
-                value={sliderValues[cfg.id]}
+                // si por algún motivo no hay valor en el estado, tomo el mínimo
+                value={sliderValues[cfg.id] ?? cfg.min}
                 onChange={handleSliderChange}
               />
             );

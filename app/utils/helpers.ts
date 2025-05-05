@@ -4,6 +4,7 @@ export interface CalculationHelpers {
     iv: (e: number, t: number, a: number) => number;
     mq: (e: number, t: string) => string;
     f0: (e: number) => string;
+    vm: (e: number[], t: number[], a: number, s?: number) => number;
 }
 
 export const createHelpers = (): CalculationHelpers => {
@@ -65,5 +66,33 @@ export const createHelpers = (): CalculationHelpers => {
         return `$${addCommas(roundNumber(value))}`;
     };
 
-    return { iv, mq, f0 };
+
+    // Nueva función vm() convertida a TypeScript
+    const vm = (
+        e: number[],
+        t: number[],
+        a: number,
+        s: number = 0
+    ): number => {
+        let r = 0;
+        if (e.length === t.length && a > 0) {
+            const c = Math.ceil(a);
+            for (let i = 0; i < e.length; i++) {
+                switch (t[i]) {
+                    case 1:
+                        r += e[i] * a + s;
+                        break;
+                    case 2:
+                        r += e[i] * c + s;
+                        break;
+                    case 3:
+                        r += e[i];
+                        break;
+                }
+            }
+        }
+        return r;
+    };
+
+    return { iv, mq, f0, vm };
 };
