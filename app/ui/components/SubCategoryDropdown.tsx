@@ -36,7 +36,7 @@ export default function SubCategoryDropdown({
                 href={`/${categorySlug}/${calculator.slug}`}
                 className="text-blue-600 hover:text-blue-800 hover:underline transition-all duration-400"
               >
-                {calculator.title}
+                {calculator.listName}
               </Link>
             </div>
           ))}

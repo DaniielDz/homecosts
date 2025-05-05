@@ -37,6 +37,7 @@ export interface Calculator {
     type: "NORMAL" | "SLIDERS" | "SELECTS_SLIDERS";
     name: string;
     title: string;
+    listName: string;
     slug: string;
     items: Item[] | Table_Item[];
     summarycontent: summaryList[];

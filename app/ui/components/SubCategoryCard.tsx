@@ -14,7 +14,7 @@ export default async function SubCategoryCard({
     .from("calculators")
     .select("*")
     .eq("subcategory_id", subCategory.id)
-    .order("name", { ascending: true });
+    .order("listName", { ascending: true });
 
   if (error) {
     console.error(error);
