@@ -17,15 +17,16 @@ export default function Calculator({
   cityZipCode,
   onChangeQty,
   onChangeLowCost,
-  onChangeHighCost
+  onChangeHighCost,
+  onChangeZipCode
 }: {
   calculator: AnyCalculator,
   cityZipCode?: number
   onChangeQty: (value: number) => void,
   onChangeLowCost: (value: number | string) => void,
   onChangeHighCost: (value: number | string) => void,
+  onChangeZipCode: (value: number | string) => void
 }) {
-  const [zipCodeValue, setZipCodeValue] = useState<number>(cityZipCode || 10001);
   const [qtyValue, setQtyValue] = useState<number>(1);
   const [sliderValues, setSliderValues] = useState<Record<string, number>>(() => {
     const init: Record<string, number> = {};
@@ -40,17 +41,17 @@ export default function Calculator({
   const [render, setRender] = useState<number>(0)
 
   const fetchZipCodeValue = async () => {
-    if (!zipCodeValue) {
+    if (!cityZipCode) {
       setError("ZIP code is required");
       return
     };
-    if (zipCodeValue < 501 || zipCodeValue > 99999) {
+    if (cityZipCode < 501 || cityZipCode > 99999) {
       setError("ZIP code is not a valid number");
       return
     };
 
     try {
-      const response = await fetch(`/api/fetchZipCode?zip=${zipCodeValue}`);
+      const response = await fetch(`/api/fetchZipCode?zip=${cityZipCode}`);
       if (!response.ok) {
         const errText = await response.json();
         throw new Error(errText.error);
@@ -225,7 +226,7 @@ export default function Calculator({
 
   useEffect(() => {
     fetchZipCodeValue();
-  }, [zipCodeValue]);
+  }, [cityZipCode]);
 
   useEffect(() => {
     if (zipData === null) return;
@@ -316,11 +317,11 @@ export default function Calculator({
     e.preventDefault();
 
     if (calculator.type === "NORMAL") {
-      if (!zipCodeValue) {
+      if (!cityZipCode) {
         setError("ZIP code is required");
         return;
       }
-      if (zipCodeValue < 501 || zipCodeValue > 99999) {
+      if (cityZipCode < 501 || cityZipCode > 99999) {
         setError("ZIP code is not a valid number");
         return;
       }
@@ -336,7 +337,12 @@ export default function Calculator({
     <section className='w-full md:w-max flex flex-col gap-5 py-11 px-7 bg-[#F9FAFB]'>
       <h1 className='text-[20px] font-semibold text-[#2563EB]'>Project Type: <span className='text-[#374151]'>{calculator.title}</span></h1>
       <form className='mb-[18px] flex gap-9 items-end' onSubmit={handleSumbit}>
-        <Input name='zipcode' label='ZIP code' onChange={(value) => setZipCodeValue(Number(value))} initialValue={zipCodeValue} />
+        <Input
+          name='zipcode'
+          label='ZIP code'
+          onChange={onChangeZipCode}
+          initialValue={cityZipCode}
+        />
         {calculator.type === "NORMAL" && (
           <Input name='qty' label={calculator.qtylabel} onChange={(value) => setQtyValue(Number(value))} initialValue={qtyValue} />
         )}

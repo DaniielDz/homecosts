@@ -9,7 +9,7 @@ import { NotesSection } from "./NotesSection"
 import { FaqSection } from "./FaqSection"
 import { ReferencesSection } from "./ReferencesSection"
 import { OverviewSection } from "./OverviewSection"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function CalculatorContent({
     category,
@@ -26,27 +26,41 @@ export default function CalculatorContent({
         zip_code: number
     }
 }) {
-    const { city: cityName, state: stateName, zip_code } = cityInfo || {}
+    // Initialize state with cityInfo or defaults
+    const [zipCodeValue, setZipCodeValue] = useState<number>(cityInfo?.zip_code || 10001)
+    const [city, setCity] = useState<string>(cityInfo?.city || "")
+    const [state, setState] = useState<string>(cityInfo?.state || "")
+    const [qty, setQty] = useState<number>(1)
+    const [lowCost, setLowCost] = useState<number | string>(0)
+    const [highCost, setHighCost] = useState<number | string>(0)
+
     const year = new Date().getFullYear()
     const projectType = calculator.title.replace(/costs/i, '').trim()
 
     const references = calculator.summarycontent
         .filter(item => item.tag === "UL")
         .flatMap(item => item.items.filter(subItem => subItem.tag === "A"))
-        ;
+        
+        let qtyLabel = ''
+        if (calculator.type === "NORMAL") qtyLabel = calculator.qtylabel
+        else if (calculator.type === "SLIDERS") {
+            qtyLabel = typeof calculator.variables.qu === "string" ? calculator.variables.qu : ''
+        } else if (calculator.type === "SELECTS_SLIDERS") qtyLabel = "Quantity"
 
-    // label lo  puedo obtener de calculator
-    let qtyLabel
-    if (calculator.type === "NORMAL") qtyLabel = calculator.qtylabel
-    else if (calculator.type === "SLIDERS") {
-        qtyLabel = typeof calculator.variables.qu === "string" ? calculator.variables.qu : "";
-    }
-    else if (calculator.type === "SELECTS_SLIDERS") qtyLabel = "Quantity"
-
-    const [qty, setQty] = useState<number>(1)
-    const [lowCost, setLowCost] = useState<number | string>(0)
-    const [highCost, setHighCost] = useState<number | string>(0)
-
+    useEffect(() => {        
+        const fetchCityInfo = async () => {
+            try {
+                const response = await fetch(`/api/getCity?zip=${zipCodeValue}`)
+                if (!response.ok) throw new Error(`Error: ${response.status}`)
+                const data = await response.json()
+                setCity(data.city)
+                setState(data.state)
+            } catch (error) {
+                console.error("Error fetching city info:", error)
+            }
+        }
+        fetchCityInfo()
+    }, [zipCodeValue])
 
     return (
         <article className="flex flex-col gap-10 max-w-[875px] p-4 pl-0 text-[#374151]">
@@ -57,31 +71,36 @@ export default function CalculatorContent({
                 { name: calculator.name || "Unknown Name", href: `/${calculator.slug || ""}` },
             ]} />
             <h1 className='text-2xl text-[#101828] font-bold'>
-                {calculator.name} Costs {cityName ? `in ${cityName}, ${stateName}` : ""} ({year}) - Free Calculator
+                {calculator.name} Costs {city ? `in ${city}, ${state}` : ''} ({year}) - Free Calculator
             </h1>
+
             <OverviewSection
                 calculatorName={calculator.name}
-                city={cityName}
-                state={stateName}
+                city={city}
+                state={state}
             />
+
             <Calculator
                 calculator={calculator}
-                cityZipCode={zip_code || 0}
-                onChangeQty={(qty) => setQty(qty)}
-                onChangeLowCost={(lowCost) => setLowCost(lowCost)}
-                onChangeHighCost={(highCost) => setHighCost(highCost)}
+                cityZipCode={zipCodeValue}
+                onChangeZipCode={(zip) => setZipCodeValue(Number(zip))}
+                onChangeQty={setQty}
+                onChangeLowCost={setLowCost}
+                onChangeHighCost={setHighCost}
             />
+
             <NotesSection
                 calculatorName={calculator.name}
                 projectType={projectType}
                 year={year}
-                cityName={cityName}
-                stateName={stateName}
+                cityName={city}
+                stateName={state}
                 highCost={highCost}
                 lowCost={lowCost}
                 qtyLabel={qtyLabel}
                 qty={qty}
             />
+
             <FaqSection calculatorName={calculator.name} />
             <ReferencesSection references={references} />
         </article>
