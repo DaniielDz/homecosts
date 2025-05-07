@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import {
     Select,
     SelectContent,
@@ -12,6 +12,7 @@ import { Category } from "@/app/types/category";
 import { SubCategory } from "@/app/types/subCategory";
 import { Calculator } from "@/app/types/calculator";
 import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 
 interface SearchFormProps {
     categories: Category[];
@@ -27,8 +28,10 @@ export default function SearchForm({ categories, subcategories }: SearchFormProp
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        setSelectedCalc(undefined)
         const fetchCalculators = async () => {
             if (!selectedSubcategory) return;
+            setFilteredCalcs([])
 
             const subcat = subcategories.find(sc => sc.name === selectedSubcategory);
             if (!subcat) return;
@@ -44,7 +47,6 @@ export default function SearchForm({ categories, subcategories }: SearchFormProp
 
         fetchCalculators();
     }, [selectedSubcategory])
-
 
     const router = useRouter();
 
@@ -66,9 +68,7 @@ export default function SearchForm({ categories, subcategories }: SearchFormProp
             }
 
             const { slug } = await res.json();
-            // obtener la calculadora
             const selectedCalculator = filteredCalcs.find(calc => calc.listName === selectedCalc);
-            //Obtener el category slug
             const categorySug = categories.find(cat => cat.id === subcategories.find(subcat => subcat.id === selectedCalculator?.subcategory_id)?.category_id)?.slug;
 
             router.push(`/${categorySug}/${selectedCalculator?.slug}/${slug}`);
@@ -85,23 +85,28 @@ export default function SearchForm({ categories, subcategories }: SearchFormProp
                 <CategorySelect
                     categories={categories}
                     subcategories={subcategories}
-                    onSelect={setSelectedSubcategory}
+                    onSelect={(subcategory) => {
+                        setSelectedSubcategory(subcategory);
+                    }}
                 />
 
-
-                <Select disabled={filteredCalcs.length === 0} onValueChange={setSelectedCalc} value={selectedCalc}>
+                <Select
+                    key={selectedSubcategory}
+                    disabled={filteredCalcs.length === 0}
+                    onValueChange={setSelectedCalc}
+                    value={selectedCalc}
+                >
                     <SelectTrigger className="cursor-pointer w-full min-w-25 max-w-80 md:min-w-70 h-full border-r border-r-gray-300 rounded-r-none">
                         <SelectValue placeholder="Choose Project Type" />
                     </SelectTrigger>
-                    <SelectContent className="bg-white">
-                        {filteredCalcs.length > 0 && filteredCalcs.map((calculator) => (
-                            <SelectItem key={calculator.id} className="cursor-pointer" value={calculator.listName}>
+                    <SelectContent side="bottom" className="bg-white h-45 lg:h-70">
+                        {filteredCalcs.map(calculator => (
+                            <SelectItem key={calculator.id} value={calculator.listName}>
                                 {calculator.listName}
                             </SelectItem>
                         ))}
                     </SelectContent>
                 </Select>
-
                 <input
                     type="text"
                     placeholder="ZIP Code"
@@ -112,7 +117,7 @@ export default function SearchForm({ categories, subcategories }: SearchFormProp
 
                 <button
                     onClick={handleSearch}
-                    className="h-full w-full max-w-15 md:max-w-18 px-2 md:px-4 text-center bg-blue-500 hover:bg-blue-600 text-white text-xs md:text-sm font-semibold rounded-r-lg cursor-pointer transition-all duration-400"
+                    className="h-full w-full max-w-15 md:max-w-18 px-2 text-center bg-blue-500 hover:bg-blue-600 text-white text-xs md:text-sm font-semibold rounded-r-lg cursor-pointer transition-all duration-400"
                 >
                     Search
                 </button>
@@ -144,7 +149,13 @@ function CategorySelect({
 
     const handleOpenChange = (isOpen: boolean) => {
         setOpen(isOpen);
-        if (!isOpen) {
+
+        if (isOpen) {
+            const subcat = subcategories.find(sc => sc.name === selectedSubcategory);
+            if (subcat) {
+                setExpandedCategoryId(subcat.category_id);
+            }
+        } else {
             setExpandedCategoryId(null);
         }
     };
@@ -152,8 +163,16 @@ function CategorySelect({
     const handleSelectSubcategory = (subcatName: string) => {
         setSelectedSubcategory(subcatName);
         onSelect(subcatName);
-        setOpen(false); // cerrar el select
+        setOpen(false);
+        setExpandedCategoryId(null);
     };
+
+    const desiredOrder = ["Project Costs", "Services", "Maintenance Costs"];
+    const catLabels = ["Remodeling", "Installation", "Maintenance"];
+
+    const orderedCategories = desiredOrder
+        .map(name => categories.find(c => c.name === name))
+        .filter(Boolean);
 
     return (
         <Select
@@ -169,30 +188,33 @@ function CategorySelect({
             </SelectTrigger>
 
 
-            <SelectContent className="bg-white">
+            <SelectContent className={`bg-white ${expandedCategoryId !== null ? 'h-max max-h-45 lg:max-h-70' : ''}`}>
                 {expandedCategoryId === null ? (
-                    categories.map((category) => (
-                        <div
-                            key={category.id}
-                            className="cursor-pointer px-4 py-2 hover:bg-gray-100"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                const hasSubcats = subcategories.some(sc => sc.category_id === category.id);
-                                if (hasSubcats) {
-                                    setExpandedCategoryId(category.id);
-                                }
-                            }}
-                        >
-                            {category.name}
-                        </div>
-                    ))
+                    orderedCategories.map((category, i) => {
+                        if (!category) return null;
+                        return (
+                            <div
+                                key={category.id}
+                                className="cursor-pointer px-4 py-2 hover:bg-gray-100"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    const hasSubcats = subcategories.some(sc => sc.category_id === category.id);
+                                    if (hasSubcats) {
+                                        setExpandedCategoryId(category.id);
+                                    }
+                                }}
+                            >
+                                {catLabels[i]}
+                            </div>
+                        );
+                    })
                 ) : (
                     <>
                         <div
-                            className="cursor-pointer px-4 py-2 text-sm text-gray-500 hover:bg-gray-100"
+                            className="cursor-pointer px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 flex gap-1 items-center"
                             onClick={() => setExpandedCategoryId(null)}
                         >
-                            ← Back
+                            <ArrowLeft className="h-5" /> Back
                         </div>
                         {subcategories
                             .filter((sc) => sc.category_id === expandedCategoryId)
