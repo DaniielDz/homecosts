@@ -1,4 +1,3 @@
-// components/SubCategoryDropdown.tsx
 "use client";
 import { useState } from "react";
 import Link from "next/link";
@@ -19,6 +18,8 @@ export default function SubCategoryDropdown({
   subCategoryName,
 }: SubCategoryDropdownProps) {
   const [open, setOpen] = useState(false);
+  const [activeId, setActiveId] = useState<number | null>(null);
+
 
   return (
     <div className="flex flex-col w-full">
@@ -56,7 +57,9 @@ export default function SubCategoryDropdown({
                 <div key={calculator.id} className="px-12">
                   <Link
                     href={`/${categorySlug}/${calculator.slug}`}
-                    className="text-blue-600 hover:text-blue-800 hover:underline transition-all duration-400"
+                    className={`transition-all duration-400 hover:text-blue-800 hover:underline ${activeId === calculator.id ? 'text-blue-900 underline' : 'text-blue-600'
+                      }`}
+                    onClick={() => setActiveId(calculator.id)}
                   >
                     {calculator.listName}
                   </Link>

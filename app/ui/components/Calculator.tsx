@@ -359,16 +359,15 @@ export default function Calculator({
         duv={duv}
       />
       {calculator.type === "SLIDERS" && (
-        <div className="flex flex-col mx-auto gap-4 w-100">
+        <div className="w-full flex flex-col mx-auto gap-4 md:w-100">
           {calculator.sliders_values?.map((cfg, idx) => {
-            const label = calculator.labels[idx] ?? "";       // etiqueta si existe
+            const label = calculator.labels[idx] ?? "";       
             return (
               <Slider
                 key={cfg.id}
                 label={label}
                 sliderValues={cfg}
                 variables={calculator.variables}
-                // si por algún motivo no hay valor en el estado, tomo el mínimo
                 value={sliderValues[cfg.id] ?? cfg.min}
                 onChange={handleSliderChange}
               />
@@ -377,7 +376,7 @@ export default function Calculator({
         </div>
       )}
       {calculator.type === "SELECTS_SLIDERS" && (
-        <div className="flex flex-col mx-auto gap-4 w-100">
+        <div className="flex flex-col mx-auto gap-4 w-max md:w-100">
           {calculator.sliderslabels.map((label, idx) => {
             const cfg = calculator.sliders_values[idx];
 
