@@ -10,7 +10,7 @@ export function ReferencesSection({ references }: { references: summaryLink[] })
                     references.map((reference, index) => (
                         <li key={index}>
                             <Link
-                                className='text-[#2563EB] underline decoration-[#2563EB] hover:text-[#1E40AF] hover:decoration-[#1E40AF] transition-colors duration-200' 
+                                className='text-[#2563EB] underline decoration-[#2563EB] hover:text-[#1E40AF] hover:decoration-[#1E40AF] transition-colors duration-200 pr-2' 
                                 href={reference.url}
                                 target='_blank'>
                                 {reference.text}

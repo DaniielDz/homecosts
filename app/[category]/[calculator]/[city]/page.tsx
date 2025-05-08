@@ -48,7 +48,7 @@ export default async function CityPage(props: { params: Params }) {
     }
 
     return (
-        <div className='flex flex-col-reverse md:flex-row justify-center'>
+        <div className='flex flex-col-reverse xl:flex-row justify-center lg:items-center xl:items-start'>
             <AsideContent
                 categorySlug={categorySlug}
                 relatedCalculators={relatedCalculators}

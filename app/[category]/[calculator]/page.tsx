@@ -18,7 +18,6 @@ export default async function CalculatorPage(props: { params: Params }) {
     let relatedCalculators: AnyCalculator[];
 
     try {
-        // Fetch data using shared helper
         const result = await getCalculator(categorySlug, calculatorSlug);
         ({ categoryData, subCategoryData, fullCalculator, relatedCalculators } = result);
     } catch (error) {
@@ -31,7 +30,7 @@ export default async function CalculatorPage(props: { params: Params }) {
     }
 
     return (
-        <div className='flex flex-col-reverse md:flex-row justify-center'>
+        <div className='flex flex-col-reverse xl:flex-row justify-center lg:items-center xl:items-start'>
             <AsideContent
                 categorySlug={categorySlug}
                 relatedCalculators={relatedCalculators}

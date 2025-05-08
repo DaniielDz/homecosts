@@ -56,8 +56,8 @@ export function AsideContent({
     }
 
     return (
-        <aside className="w-full lg:w-1/4 p-8 pr-4">
-            <div className="flex flex-col gap-5 mt-[640px] mb-[290px]">
+        <aside className="w-full xl:w-1/4 p-8 pr-4 mt-8 flex flex-col gap-8 items-center md:items-start md:flex-row md:justify-around xl:flex-col">
+            <div className="flex flex-col gap-5 xl:mt-[640px] xl:mb-[290px]">
                 <p className="text-gray-900 text-base font-semibold">Share This</p>
                 <div className="flex gap-4">
                     {Object.entries(socialLinks).map(([key, href]) => (
@@ -73,7 +73,7 @@ export function AsideContent({
                 </div>
             </div>
 
-            <div className="flex flex-col gap-5 mt-10">
+            <div className="flex flex-col gap-5 xl:mt-10">
                 <p className="text-gray-900 text-base font-semibold">
                     Explore Related Calculators
                 </p>

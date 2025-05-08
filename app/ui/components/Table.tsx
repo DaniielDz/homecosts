@@ -49,7 +49,7 @@ const Table = ({ items, name, type, inputLabel, results, qtyValue, duv }: TableP
     
 
     return (
-        <table className="w-full md:w-[823px]  border-separate border-spacing-y-4 border-spacing-x-6 text-left 
+        <table className="w-full lg:w-[823px] border-separate border-spacing-y-4 border-spacing-x-6 text-left 
         block overflow-x-scroll lg:overflow-hidden whitespace-nowrap">
             <thead>
                 <tr>
