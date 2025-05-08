@@ -49,7 +49,8 @@ const Table = ({ items, name, type, inputLabel, results, qtyValue, duv }: TableP
     
 
     return (
-        <table className="w-full md:w-[823px]  border-separate border-spacing-y-4 text-left">
+        <table className="w-full md:w-[823px]  border-separate border-spacing-y-4 border-spacing-x-6 text-left 
+        block overflow-x-scroll lg:overflow-hidden whitespace-nowrap">
             <thead>
                 <tr>
                     <th className='text-[#111827] text-sm font-semibold w-[418px]'>Labor & Material Options</th>

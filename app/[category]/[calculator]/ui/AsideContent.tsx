@@ -56,7 +56,7 @@ export function AsideContent({
     }
 
     return (
-        <aside className="w-1/4 p-8 pr-4">
+        <aside className="w-full lg:w-1/4 p-8 pr-4">
             <div className="flex flex-col gap-5 mt-[640px] mb-[290px]">
                 <p className="text-gray-900 text-base font-semibold">Share This</p>
                 <div className="flex gap-4">

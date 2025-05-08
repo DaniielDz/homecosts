@@ -75,10 +75,7 @@ function NormalCalcRow({
         <tr>
             <td className="flex gap-3 items-start">
                 <Checkbox checked={isChecked} onChange={onCheck} />
-                <div className="flex flex-col gap-1">
-                    <h4 className="text-gray-900">{item_title}</h4>
-                    <p className="text-[#6B7280] text-sm pr-11">{item_desc}</p>
-                </div>
+                <ItemDesc title={item_title} desc={item_desc} />
             </td>
             <td className="pt-1 text-gray-900 text-sm font-normal align-text-top">
                 {`${result.mq ?? roundedValue} ${result.unit}`}
@@ -97,10 +94,7 @@ function SlidersCalcRow({ item_title, item_desc, result }: any) {
     return (
         <tr>
             <td className="flex gap-3 items-start">
-                <div className="flex flex-col gap-1">
-                    <h4 className="text-gray-900">{item_title}</h4>
-                    <p className="text-[#6B7280] text-sm pr-11">{item_desc}</p>
-                </div>
+                <ItemDesc title={item_title} desc={item_desc} />
             </td>
             <td className="pt-1 text-gray-900 text-sm font-normal align-text-top">
                 {result.v11 ?? result.u11}
@@ -113,4 +107,14 @@ function SlidersCalcRow({ item_title, item_desc, result }: any) {
             </td>
         </tr>
     );
+}
+
+
+function ItemDesc({ title, desc }: { title: string, desc: string }) {
+    return (
+        <div className="flex flex-col gap-1">
+            <h4 className="text-gray-900">{title}</h4>
+            <p className="text-[#6B7280] text-sm text-wrap w-54 md:w-full md:pr-11">{desc}</p>
+        </div>
+    )
 }

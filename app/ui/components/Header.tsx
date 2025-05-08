@@ -28,40 +28,34 @@ export default function Header() {
                 <Image className={clsx(open ? "hidden" : "block")} src={"/bars.svg"} alt="Bars" width={32} height={32} />
                 <Image className={clsx(open ? "block" : "hidden")} src={"/cross.svg"} alt="Cross" width={32} height={32} />
             </button>
-            <div className={clsx("font-medium text-sm gap-7 flex-col md:flex md:flex-row md:relative md:rounded-none md:top-0 md:p-0", open ? "flex absolute top-16 right-0 z-20 p-2 bg-inherit rounded-b-md" : "hidden")}>
-                <Link
-                    href="/project_costs"
-                    className={clsx(
-                        "transition-colors duration-700 hover:text-white",
-                        pathname === "/project_costs" ? "text-white" : "text-gray-400"
-                    )}
-                >
-                    Remodeling Calculators
-                </Link>
-                <Link
-                    href="/services"
-                    className={clsx(
-                        "transition-colors duration-700 hover:text-white",
-                        pathname === "/services" ? "text-white" : "text-gray-400"
-                    )}
-                >
-                    Installation Calculators
-                </Link>
-                <Link
-                    href="/maintenance_costs"
-                    className={clsx(
-                        "transition-colors duration-700 hover:text-white",
-                        pathname === "/maintenance_costs" ? "text-white" : "text-gray-400"
-                    )}
-                >
-                    Maintenance Calculators
-                </Link>
-                <Link
-                    href="/mortgage"
-                    className="text-gray-400 hover:text-white transition-colors duration-700"
-                >
-                    Mortgage Calculator
-                </Link>
+            <div
+                className={clsx(
+                    "font-medium text-sm gap-7 flex-col md:flex md:flex-row md:relative md:rounded-none md:top-0 md:p-0 z-50",
+                    open
+                        ? "flex absolute top-16 right-0 z-20 p-2 bg-inherit rounded-b-md"
+                        : "hidden"
+                )}
+            >
+                {[
+                    { href: "/project_costs", label: "Remodeling Calculators" },
+                    { href: "/services", label: "Installation Calculators" },
+                    { href: "/maintenance_costs", label: "Maintenance Calculators" },
+                    { href: "/mortgage", label: "Mortgage Calculator" },
+                ].map(({ href, label }) => (
+                    <Link
+                        key={href}
+                        href={href}
+                        onClick={() => open && toggleMenu()}
+                        className={clsx(
+                            "transition-colors duration-200 px-2 py-1 rounded",
+                            "hover:text-white hover:bg-gray-600 md:hover:bg-transparent",
+                            "active:text-white active:bg-gray-700",
+                            pathname === href ? "text-white" : "text-gray-400"
+                        )}
+                    >
+                        {label}
+                    </Link>
+                ))}
             </div>
         </header>
     );

@@ -63,7 +63,7 @@ export default function CalculatorContent({
     }, [zipCodeValue])
 
     return (
-        <article className="flex flex-col gap-10 max-w-[875px] p-4 pl-0 text-[#374151]">
+        <article className="flex flex-col gap-10 w-full lg:max-w-[875px] p-4 lg:pl-0 text-[#374151]">
             <Breadcrumb items={[
                 { name: "Home", href: "/" },
                 { name: category.name || "Unknown Category", href: `/${category.slug || ""}` },

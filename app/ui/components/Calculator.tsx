@@ -334,9 +334,9 @@ export default function Calculator({
   }
 
   return (
-    <section className='w-full md:w-max flex flex-col gap-5 py-11 px-7 bg-[#F9FAFB]'>
+    <section className='w-full md:w-max flex flex-col gap-5 py-11 px-3 md:px-7 bg-[#F9FAFB]'>
       <h1 className='text-[20px] font-semibold text-[#2563EB]'>Project Type: <span className='text-[#374151]'>{calculator.title}</span></h1>
-      <form className='mb-[18px] flex gap-9 items-end' onSubmit={handleSumbit}>
+      <form className='w-full mb-[18px] flex gap-9 items-end flex-wrap' onSubmit={handleSumbit}>
         <Input
           name='zipcode'
           label='ZIP code'

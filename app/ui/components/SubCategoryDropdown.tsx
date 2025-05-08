@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Calculator } from "../../types/calculator";
 import Image from "next/image";
 import clsx from "clsx";
+import { AnimatePresence, motion } from "framer-motion"
 
 interface SubCategoryDropdownProps {
   calculators: Calculator[];
@@ -20,28 +21,51 @@ export default function SubCategoryDropdown({
   const [open, setOpen] = useState(false);
 
   return (
-    <div className={clsx("flex flex-col", open ? "h-full" : "h-16")}>
+    <div className="flex flex-col w-full">
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className={clsx("flex items-center justify-between w-full h-full px-8 cursor-pointer", open ? "pt-5" : "pt-0")}
+        className={clsx(
+          "flex items-center justify-between w-full px-8 cursor-pointer text-left",
+          open ? "pt-5" : "h-16"
+        )}
       >
-        <h2 className="text-base text-gray-900 font-medium">{subCategoryName}</h2>
-        <Image src={"/arrow.svg"} alt="arrow" width={16} height={16} className={`${open ? "rotate-180" : ""} w-4 h-4`} />
+        <h2 className="text-base text-gray-900 font-medium">
+          {subCategoryName}
+        </h2>
+        <motion.div
+          animate={{ rotate: open ? -180 : 0 }}
+          transition={{ duration: 0.3 }}
+          className="w-4 h-4"
+        >
+          <Image src="/arrow.svg" alt="arrow" width={16} height={16} />
+        </motion.div>
       </button>
-      {open && (
-        <div className="space-y-2 py-6">
-          {calculators.map((calculator) => (
-            <div key={calculator.id} className="px-12">
-              <Link
-                href={`/${categorySlug}/${calculator.slug}`}
-                className="text-blue-600 hover:text-blue-800 hover:underline transition-all duration-400"
-              >
-                {calculator.listName}
-              </Link>
+
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key="content"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className="overflow-hidden"
+          >
+            <div className="space-y-2 py-6">
+              {calculators.map((calculator) => (
+                <div key={calculator.id} className="px-12">
+                  <Link
+                    href={`/${categorySlug}/${calculator.slug}`}
+                    className="text-blue-600 hover:text-blue-800 hover:underline transition-all duration-400"
+                  >
+                    {calculator.listName}
+                  </Link>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
