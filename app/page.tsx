@@ -11,7 +11,7 @@ export default async function Home() {
   if (categoriesError) {
     console.error(categoriesError);
   }
-  
+
 
   const { data: subcategories, error: subcategoryError } = await supabase
     .from("subcategories")
@@ -25,8 +25,12 @@ export default async function Home() {
   return (
     <div className="h-[calc(100dvh-64px)] w-full bg-[url('/homeBgImage.webp')] bg-cover bg-center relative">
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 z-30 px-2.5 md:px-5">
-        <h1 className="max-w-4xl text-center text-3xl md:text-6xl text-white font-bold">Get Accurate Home Project Estimates in Seconds</h1>
-        <p className="text-center text-lg md:text-xl text-gray-200">1,000+ home improvement calculators for remodeling, repairs, and installations. <br /> Get localized costs for materials, time, and labor in your ZIP code.</p>
+        <h1 className="max-w-4xl text-center text-4xl md:text-6xl text-white font-bold">
+          Get Accurate Home Project Estimates in Seconds
+        </h1>
+        <p className="text-center text-lg md:text-xl text-gray-200">
+          1,000+ home improvement calculators for remodeling, repairs, and installations. <br /> Get localized costs for materials, time, and labor in your ZIP code.
+        </p>
         <SearchForm
           categories={categories || []}
           subcategories={subcategories || []}
