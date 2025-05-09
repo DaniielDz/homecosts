@@ -82,7 +82,7 @@ export default function SearchForm({ categories, subcategories }: SearchFormProp
     return (
         <>
             <div
-                className="w-full h-max md:h-11 flex flex-col md:flex-row items-center gap-2 max-w-2xl mx-auto mt-4 md:bg-white rounded-lg shadow-md md:max-w-fit"
+                className="w-full h-max md:h-11 flex flex-col md:flex-row items-center gap-2 max-w-2xl mx-auto mt-4 md:bg-white rounded-lg shadow-md md:max-w-200"
             >
                 <CategorySelect
                     categories={categories}
@@ -98,7 +98,8 @@ export default function SearchForm({ categories, subcategories }: SearchFormProp
                     onValueChange={setSelectedCalc}
                     value={selectedCalc}
                 >
-                    <SelectTrigger className="cursor-pointer w-full min-w-25 max-w-80 md:min-w-70 h-full border-r border-r-gray-300 md:rounded-r-none bg-white">
+                    <SelectTrigger className="cursor-pointer w-full min-w-25 max-w-80 md:min-w-70 !h-11 md:h-full md:border-r md:border-r-gray-300 rounded md:rounded-r-none bg-white"
+                    >
                         <SelectValue placeholder="Choose Project Type" />
                     </SelectTrigger>
                     <SelectContent side="bottom" className="bg-white h-45 lg:h-70">
@@ -114,12 +115,12 @@ export default function SearchForm({ categories, subcategories }: SearchFormProp
                     placeholder="ZIP Code"
                     value={zip}
                     onChange={(e) => setZip(e.target.value)}
-                    className="text-gray-900 text-sm px-4 md:px-1 py-2 w-full max-w-80 rounded bg-white md:max-w-36 focus:outline-none"
+                    className="text-gray-900 text-sm px-4 md:px-1 py-2 w-full max-w-80 h-11 lg:h-full rounded bg-white md:max-w-36 focus:outline-none"
                 />
 
                 <button
                     onClick={handleSearch}
-                    className="h-full w-full flex items-center justify-center max-w-80 md:max-w-18 py-2.5 px-2 text-center bg-blue-500 hover:bg-blue-600 text-white text-base rounded md:text-sm font-semibold md:rounded-l-none md:rounded-r-lg cursor-pointer transition-all duration-400"
+                    className="h-11 w-full lg:h-full flex items-center justify-center max-w-80 md:max-w-18 py-2.5 px-2 text-center bg-blue-500 hover:bg-blue-600 text-white text-base rounded md:text-sm font-semibold md:rounded-l-none md:rounded-r-lg cursor-pointer transition-all duration-400"
                 >
                     Search
                 </button>
@@ -183,7 +184,7 @@ function CategorySelect({
             value={selectedSubcategory}
             onValueChange={handleSelectSubcategory}
         >
-            <SelectTrigger className="cursor-pointer w-full min-w-25 max-w-80 md:min-w-70 h-full border-r border-r-gray-300 md:rounded-r-none bg-white">
+            <SelectTrigger className="cursor-pointer w-full min-w-25 max-w-80 md:min-w-70 !h-11 md:h-full md:border-r md:border-r-gray-300 rounded md:rounded-r-none bg-white">
                 <SelectValue placeholder="Select Project Category">
                     {selectedSubcategory}
                 </SelectValue>
