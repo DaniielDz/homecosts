@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Select,
     SelectContent,
@@ -98,10 +98,21 @@ export default function SearchForm({ categories, subcategories }: SearchFormProp
                     onValueChange={setSelectedCalc}
                     value={selectedCalc}
                 >
-                    <SelectTrigger className="cursor-pointer w-full min-w-25 max-w-80 md:min-w-70 !h-11 md:h-full md:border-r md:border-r-gray-300 rounded md:rounded-r-none bg-white"
+                    <SelectTrigger
+                        className={[
+                            "w-full min-w-25 max-w-80 md:min-w-70 !h-11 rounded md:rounded-r-none border border-gray-300",
+                            "!bg-white",
+                            "text-black cursor-pointer",
+                            "disabled:!bg-white",
+                            "disabled:text-gray-400",
+                            "disabled:cursor-not-allowed",
+                            "disabled:opacity-100",
+                            "disabled:pointer-events-none",
+                        ].join(" ")}
                     >
                         <SelectValue placeholder="Choose Project Type" />
                     </SelectTrigger>
+
                     <SelectContent side="bottom" className="bg-white h-45 lg:h-70">
                         {filteredCalcs.map(calculator => (
                             <SelectItem key={calculator.id} value={calculator.listName}>
@@ -110,6 +121,8 @@ export default function SearchForm({ categories, subcategories }: SearchFormProp
                         ))}
                     </SelectContent>
                 </Select>
+
+
                 <input
                     type="text"
                     placeholder="ZIP Code"
