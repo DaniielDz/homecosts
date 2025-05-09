@@ -100,9 +100,9 @@ export default function SearchForm({ categories, subcategories }: SearchFormProp
                 >
                     <SelectTrigger
                         className={[
-                            "w-full min-w-25 max-w-80 md:min-w-70 !h-11 rounded md:rounded-r-none border border-gray-300",
+                            "w-full min-w-25 max-w-80 md:min-w-70 !h-11 md:h-full rounded md:rounded-r-none md:border-r md:border-gray-300",
                             "!bg-white",
-                            "text-black cursor-pointer",
+                            "text-gray-900 cursor-pointer",
                             "disabled:!bg-white",
                             "disabled:text-gray-400",
                             "disabled:cursor-not-allowed",
