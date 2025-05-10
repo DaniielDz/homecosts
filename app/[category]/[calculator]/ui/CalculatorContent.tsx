@@ -40,14 +40,14 @@ export default function CalculatorContent({
     const references = calculator.summarycontent
         .filter(item => item.tag === "UL")
         .flatMap(item => item.items.filter(subItem => subItem.tag === "A"))
-        
-        let qtyLabel = ''
-        if (calculator.type === "NORMAL") qtyLabel = calculator.qtylabel
-        else if (calculator.type === "SLIDERS") {
-            qtyLabel = typeof calculator.variables.qu === "string" ? calculator.variables.qu : ''
-        } else if (calculator.type === "SELECTS_SLIDERS") qtyLabel = "Quantity"
 
-    useEffect(() => {        
+    let qtyLabel = ''
+    if (calculator.type === "NORMAL") qtyLabel = calculator.qtylabel
+    else if (calculator.type === "SLIDERS") {
+        qtyLabel = typeof calculator.variables.qu === "string" ? calculator.variables.qu : ''
+    } else if (calculator.type === "SELECTS_SLIDERS") qtyLabel = "Quantity"
+
+    useEffect(() => {
         const fetchCityInfo = async () => {
             try {
                 const response = await fetch(`/api/getCity?zip=${zipCodeValue}`)
@@ -101,8 +101,13 @@ export default function CalculatorContent({
                 qty={qty}
             />
 
-            <FaqSection calculatorName={calculator.name} />
-            <ReferencesSection references={references} />
+            <FaqSection
+                calculatorName={calculator.listName}
+                faqs={calculator.faqs}
+            />
+            <ReferencesSection
+                references={references}
+            />
         </article>
     )
 }

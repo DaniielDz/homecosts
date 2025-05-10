@@ -7,10 +7,6 @@ export type Table_Item = {
     item_title: string;
     item_desc: string;
 }
-// type summaryItem = {
-//     tag: string;
-//     text: string;
-// }
 
 export type summaryLink = {
     tag: string;
@@ -22,13 +18,22 @@ export type summaryLink = {
 type summaryList = {
     tag: string;
     items: summaryLink[];
-    // items: (summaryItem | summaryLink)[];
+}
+
+export interface FAQ {
+    title: string;
+    intro?: string | TrustedHTML;
+    list?: {
+        title?: string | TrustedHTML;
+        items: string[] | TrustedHTML[]; 
+    };
+    outro?: string | TrustedHTML;
 }
 
 export type CalculatorVariableValue = null | string | number | string[] | number[];
 
 export type CalculatorVariables = {
-  [key: string]: CalculatorVariableValue;
+    [key: string]: CalculatorVariableValue;
 };
 
 export interface Calculator {
@@ -41,7 +46,7 @@ export interface Calculator {
     slug: string;
     items: Item[] | Table_Item[];
     summarycontent: summaryList[];
-    // summarycontent: (summaryItem | summaryList)[];
+    faqs: FAQ[];
 }
 
 export interface NormalCalculator extends Calculator {
@@ -61,7 +66,7 @@ export interface NormalCalculator extends Calculator {
 
 export interface SlidersCalculator extends Calculator {
     type: "SLIDERS";
-    labels : string[];
+    labels: string[];
     variables: CalculatorVariables
     functions: string;
     sliders_values: {
@@ -74,7 +79,7 @@ export interface SlidersCalculator extends Calculator {
 
 export interface SelectsSlidersCalculator extends Calculator {
     type: "SELECTS_SLIDERS";
-    sliderslabels : string[];
+    sliderslabels: string[];
     columnlabels: string[];
     rowlabels: string[];
     variables: CalculatorVariables
