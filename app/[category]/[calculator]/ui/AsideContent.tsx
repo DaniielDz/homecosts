@@ -84,7 +84,7 @@ export function AsideContent({
                                 className="text-sm text-blue-600 hover:text-blue-700 hover:underline"
                                 href={`/${categorySlug}/${calculator.slug}/${citySlug ?? ""}`}
                             >
-                                {calculator.title}
+                                {calculator.listName}
                             </Link>
                         </li>
                     ))}
