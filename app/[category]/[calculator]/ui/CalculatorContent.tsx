@@ -101,10 +101,15 @@ export default function CalculatorContent({
                 qty={qty}
             />
 
-            <FaqSection
-                calculatorName={calculator.listName}
-                faqs={calculator.faqs}
-            />
+            {
+                calculator.faqs && (
+                    <FaqSection
+                    calculatorName={calculator.listName}
+                    faqs={calculator.faqs}
+                />
+                )
+            }
+
             <ReferencesSection
                 references={references}
             />
