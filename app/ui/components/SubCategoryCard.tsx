@@ -24,7 +24,7 @@ export default async function SubCategoryCard({
   const calculators: Calculator[] = data || [];
 
   return (
-    <div className="w-full border-2 border-gray-300 rounded-md shadow hover:shadow-lg transition-all duration-300">
+    <div className="w-full border border-gray-300 rounded-md shadow hover:shadow-lg transition-all duration-300">
       <SubCategoryDropdown
         calculators={calculators}
         categorySlug={categorySlug}

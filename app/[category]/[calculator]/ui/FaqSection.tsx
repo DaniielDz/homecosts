@@ -9,20 +9,20 @@ export function FaqSection({ calculatorName, faqs }: { calculatorName: string, f
                 {faqs.map((faq, index) => (
                     <li key={index} className='mb-10 flex flex-col gap-3 text-gray-700'>
                         <h3
-                            className='text-lg font-semibold'>
+                            className='text-lg md:text-xl font-semibold'>
                             {faq.title}
                         </h3>
                         <p
-                            className='text-sm'
+                            className='text-sm md:text-base'
                             dangerouslySetInnerHTML={{ __html: faq.intro || '' }}></p>
                         <div>
                             {faq.list?.title && (
-                                <h4 className='text-900 text-sm font-semibold mb-2'>
+                                <h4 className='text-900 text-lg font-semibold mb-2'>
                                     {String(faq.list.title)}
                                 </h4>
                             )}
                             {faq.list?.items && (
-                                <ul className='list-disc list-inside pl-6 text-sm'>
+                                <ul className='list-disc list-inside pl-6 text-sm md:text-base'>
                                     {faq.list.items.map((item, itemIndex) => (
                                         <li
                                             className="mb-2"
@@ -36,7 +36,7 @@ export function FaqSection({ calculatorName, faqs }: { calculatorName: string, f
                             )}
                         </div>
                         <p
-                            className='text-sm'
+                            className='text-sm md:text-base'
                             dangerouslySetInnerHTML={{ __html: faq.outro || '' }}></p>
                     </li>
                 ))}

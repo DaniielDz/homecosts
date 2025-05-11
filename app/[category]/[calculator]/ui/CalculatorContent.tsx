@@ -1,9 +1,6 @@
 'use client'
 
 import { AnyCalculator } from "@/app/types/calculator"
-import { Category } from "@/app/types/category"
-import { SubCategory } from "@/app/types/subCategory"
-import Breadcrumb from "@/app/ui/components/BreadCrumb"
 import Calculator from "@/app/ui/components/Calculator"
 import { NotesSection } from "./NotesSection"
 import { FaqSection } from "./FaqSection"
@@ -12,13 +9,9 @@ import { OverviewSection } from "./OverviewSection"
 import { useEffect, useState } from "react"
 
 export default function CalculatorContent({
-    category,
-    subCategory,
     calculator,
     cityInfo
 }: {
-    category: Category,
-    subCategory: SubCategory,
     calculator: AnyCalculator,
     cityInfo?: {
         city: string,
@@ -64,12 +57,6 @@ export default function CalculatorContent({
 
     return (
         <article className="flex flex-col gap-10 w-full lg:max-w-[875px] p-4 lg:pl-0 text-[#374151]">
-            <Breadcrumb items={[
-                { name: "Home", href: "/" },
-                { name: category.name || "Unknown Category", href: `/${category.slug || ""}` },
-                { name: subCategory.name || "Unknown SubCategory", href: `/${category.slug || ""}` },
-                { name: calculator.name || "Unknown Name", href: `/${calculator.slug || ""}` },
-            ]} />
             <h1 className='text-2xl text-[#101828] font-bold'>
                 {calculator.name} Costs {city ? `in ${city}, ${state}` : ''} ({year}) - Free Calculator
             </h1>
