@@ -12,7 +12,7 @@ type BreadcrumbProps = {
 
 const Breadcrumb = ({ items }: BreadcrumbProps) => {
     return (
-        <div className="flex items-center gap-4 text-xs md:text-sm text-[#2563EB] px-4 pt-6 lg:w-full lg:max-w-[875px] lg:mx-auto lg:pl-0 lg:pt-12 lg:pb-6 xl:max-w-[calc(875px+25%)]">
+        <div className="flex items-center gap-4 text-xs md:text-sm text-[#2563EB] px-4 pt-6 lg:w-full lg:max-w-[875px] lg:mx-auto lg:pl-0 lg:pt-12 lg:pb-6 xl:m-0 xl:pl-12">
             {items.map((item, index) => (
                 <div className="w-max flex gap-4 items-center" key={index}>
                     {index > 0 && <span className="text-[#111827]">{'>'}</span>}

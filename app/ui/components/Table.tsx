@@ -50,13 +50,13 @@ const Table = ({ items, name, type, inputLabel, results, qtyValue, duv }: TableP
 
     return (
         <table className="w-full lg:w-[823px] border-separate border-spacing-y-4 border-spacing-x-6 text-left 
-        block overflow-x-scroll lg:overflow-hidden whitespace-nowrap">
+        block overflow-x-scroll lg:overflow-hidden whitespace-nowrap text-sm md:text-base">
             <thead>
                 <tr>
-                    <th className='text-[#111827] text-sm font-semibold w-[418px]'>Labor & Material Options</th>
-                    <th className='text-[#374151] text-sm font-semibold w-[110px]'>Qty</th>
-                    <th className='text-[#374151] text-sm font-semibold w-[110px]'>Low</th>
-                    <th className='text-[#374151] text-sm font-semibold w-[110px]'>High</th>
+                    <th className='text-[#111827] font-semibold w-[418px]'>Labor & Material Options</th>
+                    <th className='text-[#374151] font-semibold w-[110px]'>Qty</th>
+                    <th className='text-[#374151] font-semibold w-[110px]'>Low</th>
+                    <th className='text-[#374151] font-semibold w-[110px]'>High</th>
                 </tr>
             </thead>
             <tbody>
@@ -78,22 +78,22 @@ const Table = ({ items, name, type, inputLabel, results, qtyValue, duv }: TableP
                 type === "NORMAL" && (
                     <tbody>
                         <tr>
-                            <th className='text-[#111827] text-sm font-semibold'>Total Cost to {name}</th>
-                            <td className='text-[#374151] text-sm font-semibold'>{qtyValue} {duv}</td>
-                            <td className='text-[#22C55E] text-sm font-semibold'>
+                            <th className='text-[#111827] font-semibold'>Total Cost to {name}</th>
+                            <td className='text-[#374151] font-semibold'>{qtyValue} {duv}</td>
+                            <td className='text-[#22C55E] font-semibold'>
                                 ${roundNumber(totalLow)}
                             </td>
-                            <td className='text-[#EF4444] text-sm font-semibold'>
+                            <td className='text-[#EF4444] font-semibold'>
                                 ${roundNumber(totalHigh)}
                             </td>
                         </tr>
                         <tr>
-                            <td className='text-[#6B7280] text-sm font-normal'>Average Cost Per {inputLabel}</td>
+                            <td className='text-[#6B7280] font-normal'>Average Cost Per {inputLabel}</td>
                             <td></td>
-                            <td className='text-[#6B7280] text-sm font-normal'>
+                            <td className='text-[#6B7280] font-normal'>
                                 ${roundToTwoDecimals(avgLow)}
                             </td>
-                            <td className='text-[#6B7280] text-sm font-normal'>
+                            <td className='text-[#6B7280] font-normal'>
                                 ${roundToTwoDecimals(avgHigh)}
                             </td>
                         </tr>

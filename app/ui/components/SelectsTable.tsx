@@ -65,7 +65,7 @@ function SelectsTable({
                     <tr>
                         <th className="p-2">{columnTitles[0]}</th>
                         {columnTitles.slice(1).map((col) => (
-                            <th key={col} className="text-sm p-2 text-gray-700">
+                            <th key={col} className="text-sm md:text-base p-2 text-gray-700">
                                 {col}
                             </th>
                         ))}
@@ -74,7 +74,7 @@ function SelectsTable({
                 <tbody>
                     {rowTitles.map((row) => (
                         <tr key={row}>
-                            <td className="text-sm p-2 font-bold text-gray-800 text-left whitespace-nowrap">
+                            <td className="text-sm md:text-base p-2 font-bold text-gray-800 text-left whitespace-nowrap">
                                 {row}
                             </td>
                             {columnTitles.slice(1).map((col) => {

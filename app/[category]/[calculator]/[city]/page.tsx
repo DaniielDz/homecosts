@@ -5,6 +5,7 @@ import { getCalculator } from "../lib/getCalculator";
 import CalculatorContent from "../ui/CalculatorContent";
 import { supabase } from "@/app/lib/supabase";
 import { AsideContent } from "../ui/AsideContent";
+import Breadcrumb from "@/app/ui/components/BreadCrumb";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 86400; // cache 24 h
@@ -48,19 +49,25 @@ export default async function CityPage(props: { params: Params }) {
     }
 
     return (
-        <div className='flex flex-col-reverse xl:flex-row justify-center lg:items-center xl:items-start'>
-            <AsideContent
-                categorySlug={categorySlug}
-                relatedCalculators={relatedCalculators}
-                citySlug={citySlug}
-                calculatorName={fullCalculator.name ?? "Calculator"}
-            />
-            <CalculatorContent
-                category={categoryData}
-                subCategory={subCategoryData}
-                calculator={fullCalculator}
-                cityInfo={cityRecord}
-            />
+        <div>
+            <Breadcrumb items={[
+                { name: "Home", href: "/" },
+                { name: categoryData.name || "Unknown Category", href: `/${categoryData.slug || ""}` },
+                { name: subCategoryData.name || "Unknown SubCategory", href: `/${categoryData.slug || ""}` },
+                { name: fullCalculator.listName || "Unknown Name", href: `/${fullCalculator.slug || ""}` },
+            ]} />
+            <section className='flex flex-col-reverse xl:flex-row justify-center lg:items-center xl:items-start'>
+                <AsideContent
+                    categorySlug={categorySlug}
+                    relatedCalculators={relatedCalculators}
+                    citySlug={citySlug}
+                    calculatorName={fullCalculator.name ?? "Calculator"}
+                />
+                <CalculatorContent
+                    calculator={fullCalculator}
+                    cityInfo={cityRecord}
+                />
+            </section>
         </div>
     );
 }

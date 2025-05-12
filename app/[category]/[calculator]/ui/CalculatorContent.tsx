@@ -19,7 +19,6 @@ export default function CalculatorContent({
         zip_code: number
     }
 }) {
-    // Initialize state with cityInfo or defaults
     const [zipCodeValue, setZipCodeValue] = useState<number>(cityInfo?.zip_code || 10001)
     const [city, setCity] = useState<string>(cityInfo?.city || "")
     const [state, setState] = useState<string>(cityInfo?.state || "")
@@ -56,13 +55,20 @@ export default function CalculatorContent({
     }, [zipCodeValue])
 
     return (
-        <article className="flex flex-col gap-10 w-full lg:max-w-[875px] p-4 lg:pl-0 text-[#374151]">
+        <article className="flex flex-col gap-10 w-full p-4 lg:max-w-[875px] xl:w-[70%] xl:max-w-max xl:pr-40 lg:pl-0 text-[#374151]">
             <h1 className='text-2xl text-[#101828] font-bold'>
-                {calculator.name} Costs {city ? `in ${city}, ${state}` : ''} ({year}) - Free Calculator
+                {`Cost to ${calculator.listName.startsWith("Cost to ")
+                        ? calculator.listName.replace("Cost to ", "")
+                        : calculator.listName
+                    } ${city ? `in ${city}, ${state}` : ''} (${year})`}
             </h1>
 
             <OverviewSection
-                calculatorName={calculator.name}
+                calculatorName={
+                    calculator.listName.startsWith("Cost to ")
+                        ? calculator.listName.replace("Cost to ", "")
+                        : calculator.listName
+                }
                 city={city}
                 state={state}
             />
@@ -91,9 +97,9 @@ export default function CalculatorContent({
             {
                 calculator.faqs && (
                     <FaqSection
-                    calculatorName={calculator.listName}
-                    faqs={calculator.faqs}
-                />
+                        calculatorName={calculator.listName}
+                        faqs={calculator.faqs}
+                    />
                 )
             }
 

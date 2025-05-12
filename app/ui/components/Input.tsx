@@ -28,12 +28,9 @@ export function Input({ name, label, initialValue, onChange }: InputProps) {
                 id={name}
                 name={name}
                 type="number"
-                className="p-2.5 border bg-white border-[#D1D5DB] rounded-sm outline-0 font-normal appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                // 3) Value controla exactamente lo que hay en state
+                className="h-9.5 p-2.5 border bg-white border-gray-300 rounded-sm outline-0 font-normal appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:border-blue-500 transition-all duration-300"
                 value={value}
-                // permitimos borrar todo porque solo actualizamos el state interno
                 onChange={(e) => setValue(e.target.value)}
-                // 4) Al salir (onBlur) notificamos al padre con número o cadena vacía
                 onBlur={() => {
                     const trimmed = value.trim();
                     if (trimmed === "") {
