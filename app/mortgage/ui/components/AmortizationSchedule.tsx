@@ -22,6 +22,7 @@ export function AmortizationSchedule({
     firstPayment,
     onFirstPaymentChange,
 }: AmortizationScheduleProps) {
+
     const [expandAll, setExpandAll] = useState(false)
     const [expandedYears, setExpandedYears] = useState<Set<string>>(new Set())
 
@@ -145,6 +146,8 @@ export function AmortizationSchedule({
                                     {/* Monthly details if expanded */}
                                     {isExpanded && entries.map((e) => {
                                         const monthLabel = new Date(`${e.date}-01`).toLocaleString("en-US", { month: "short", year: "numeric" })
+                                        console.log(e.date, monthLabel);
+
                                         return (
                                             <tr key={e.date} className="border-b border-gray-100">
                                                 <td className="pl-6 py-2 text-sm text-gray-700">{monthLabel}</td>

@@ -232,7 +232,7 @@ export default function MortgageGuide() {
 
 function ListItem({ title, text }: { title: string, text: string }) {
     return (
-        <li className="text-gray-700 text-sm">
+        <li className="text-gray-700 text-base">
             <h3 className="font-bold">{title}</h3>
             <p>{text}</p>
         </li>

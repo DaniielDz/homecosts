@@ -28,7 +28,6 @@ export function ExtraPayments({
     oneTimeDate,
     onOneTimeDateChange,
 }: ExtraPaymentsProps) {
-    // formatea números con separador de miles
     const formatNumber = (val: number) => val.toLocaleString()
 
     const handleNumberInput = (
@@ -40,7 +39,7 @@ export function ExtraPayments({
     }
 
     return (
-        <div className="w-full max-w-sm bg-gray-50 shadow-lg rounded-lg">
+        <div className="w-full max-w-sm bg-gray-50 shadow-md rounded-lg">
             <div className="p-6">
                 <h3 className="text-sm text-gray-900 font-semibold">Optional: Make extra payments</h3>
                 <p className="mt-1 text-sm text-gray-500 leading-6">

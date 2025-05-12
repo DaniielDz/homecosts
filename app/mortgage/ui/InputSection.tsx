@@ -121,7 +121,7 @@ export function InputSection({
                     )}
                 </AnimatePresence>
                 <button
-                    className="w-full bg-blue-600 text-white font-semibold text-sm py-2 px-4 rounded-md shadow-md cursor-pointer hover:bg-blue-700 transition-all duration-300"
+                    className="w-full h-10.5 bg-blue-600 text-white font-semibold text-sm py-2 px-4 rounded-md shadow-md cursor-pointer hover:bg-blue-700 transition-all duration-300"
                     onClick={onUpdate}
                 >
                     Update

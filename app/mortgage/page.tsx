@@ -69,6 +69,11 @@ export default function MortgagePage() {
         setDownAmt(newDownAmt);
     }, [price, downPct]);
 
+    useEffect(() => {
+        onUpdate()
+    }, [])
+
+
     return (
         <div className="flex flex-col items-end justify-center w-full max-w-max mx-auto px-4">
             <div className="w-full flex flex-col lg:flex-row items-center lg:items-start justify-center gap-19.5 mt-[178px] mb-42.5">

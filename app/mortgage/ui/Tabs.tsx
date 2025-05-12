@@ -19,7 +19,7 @@ export function Tabs({ tabs, initialIndex = 0, onChange }: TabsProps) {
     const tabCount = tabs.length
     const underlineStyle: React.CSSProperties = {
         width: `${100 / tabCount}%`,
-        top: '95%',
+        top: '98%',
         left: `${(activeIndex * 100) / tabCount}%`,
         transition: 'left 0.3s ease',
     }
@@ -41,7 +41,7 @@ export function Tabs({ tabs, initialIndex = 0, onChange }: TabsProps) {
                 ))}
             </div>
             <div
-                className="absolute bottom-0 h-[3px] bg-blue-500"
+                className="absolute bottom-0 h-[2px] bg-blue-500"
                 style={underlineStyle}
             />
         </div>

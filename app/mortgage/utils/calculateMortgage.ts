@@ -44,6 +44,12 @@ export interface Summary {
   payoffDate: string
 }
 
+export interface YearlySummary {
+  year: number
+  principal: number   // suma de principal pagado en ese año
+  interest: number    // suma de interés pagado en ese año
+}
+
 export interface MortgageResults {
   monthlyPaymentPI: number
   paymentBreakdown: {
@@ -55,9 +61,11 @@ export interface MortgageResults {
   }
   pieChartData: PieDatum[]
   lineChartData: LineDatum[]
-  amortizationSchedule: ScheduleEntry[]
+  amortizationSchedule: ScheduleEntry[]    // pagos mes a mes
+  annualSummary: YearlySummary[]          // resumen por año
   summary: Summary
 }
+
 
 export function calculateMortgageResults(
   inputs: MortgageInputs
@@ -83,9 +91,10 @@ export function calculateMortgageResults(
   const n = termYears * 12
   const monthlyPI = monthlyRate * loanAmount / (1 - Math.pow(1 + monthlyRate, -n))
 
-  // Prepare schedule loop starting at startDate
+  // Preparar el bucle de amortización
   const [startYear, startMonth] = startDate.split('-').map((v) => parseInt(v, 10))
   let balance = loanAmount
+
   const schedule: ScheduleEntry[] = []
 
   for (let i = 0; i < n; i++) {
@@ -94,31 +103,54 @@ export function calculateMortgageResults(
     const month = (monthIndex % 12) + 1
     const ym = `${year}-${String(month).padStart(2, '0')}`
 
-    const interest = balance * monthlyRate
-    const principalScheduled = monthlyPI - interest
+    // intereses y principal programado este mes
+    const interestThisMonth = balance * monthlyRate
+    const principalScheduled = monthlyPI - interestThisMonth
 
-    // Extras
-    const extraAnniversary = (month === startMonth) ? extraYearly : 0
+    // extras
+    const extraAnniversary = month === startMonth ? extraYearly : 0
     const extraOneTime = oneTimeDate === ym ? oneTimeAmount : 0
     const totalExtra = extraMonthly + extraAnniversary + extraOneTime
 
-    const principalTotal = principalScheduled + totalExtra
-    balance = Math.max(balance - principalTotal, 0)
+    // principal total este mes
+    const principalThisMonth = principalScheduled + totalExtra
 
+    // actualizar balance
+    balance = Math.max(balance - principalThisMonth, 0)
+
+    // guardo solo lo pagado este mes
     schedule.push({
-      date: ym,
-      principal: principalTotal,
-      interest,
-      balance,
+      date: year + '-' + String(month).padStart(2, '0'),
+      principal: parseFloat(principalThisMonth.toFixed(2)),
+      interest: parseFloat(interestThisMonth.toFixed(2)),
+      balance: parseFloat(balance.toFixed(2)),
     })
   }
 
-  // Summary
-  const totalInterest = schedule.reduce((sum, e) => sum + e.interest, 0)
-  const payoffEntry = schedule[schedule.length - 1]
-  const payoffDate = new Date(`${payoffEntry.date}-01`).toLocaleString('en-US', {
-    month: 'short', year: 'numeric'
+  // Construir resumen anual (suma mes a mes)
+  const yearlyMap = new Map<number, { principal: number; interest: number }>()
+  schedule.forEach(({ date, principal, interest }) => {
+    const y = parseInt(date.slice(0, 4), 10)
+    if (!yearlyMap.has(y)) {
+      yearlyMap.set(y, { principal: 0, interest: 0 })
+    }
+    const entry = yearlyMap.get(y)!
+    entry.principal += principal
+    entry.interest += interest
   })
+  const annualSummary: YearlySummary[] = Array.from(yearlyMap.entries())
+    .map(([year, { principal, interest }]) => ({
+      year,
+      principal: parseFloat(principal.toFixed(2)),
+      interest: parseFloat(interest.toFixed(2)),
+    }))
+    .sort((a, b) => a.year - b.year)
+
+  // Summary general
+  const totalInterest = annualSummary.reduce((sum, y) => sum + y.interest, 0)
+  const payoffDate = new Date(`${schedule[schedule.length - 1].date}-01`)
+    .toLocaleString('en-US', { month: 'short', year: 'numeric' })
+
   const summary: Summary = {
     loanAmount,
     totalInterest,
@@ -126,25 +158,16 @@ export function calculateMortgageResults(
     payoffDate,
   }
 
-  // Pie chart data: monthly payment breakdown
-  const pieChartData: PieDatum[] = [
-    { name: 'Principal & interest', value: monthlyPI, fill: '#2B7FFF' },
-    { name: 'Property tax',         value: taxes,      fill: '#8E51FF' },
-    { name: 'Insurance',            value: insurance,  fill: '#00C950' },
-    { name: 'HOA fees',             value: hoaFees,    fill: '#00b8db' },
-  ]
-
-  // Line chart data: cumulative principal, cumulative interest, balance
   let cumPrincipal = 0
   let cumInterest = 0
-  const lineChartData: LineDatum[] = schedule.map((e) => {
+  const lineChartData: LineDatum[] = schedule.map(e => {
     cumPrincipal += e.principal
     cumInterest += e.interest
     return {
       date: e.date,
-      principalPaid: parseFloat(cumPrincipal.toFixed(2)),
-      interestPaid: parseFloat(cumInterest.toFixed(2)),
-      loanBalance: parseFloat(e.balance.toFixed(2)),
+      principalPaid: parseFloat(cumPrincipal.toFixed(2)),  // acumulado
+      interestPaid: parseFloat(cumInterest.toFixed(2)),   // acumulado
+      loanBalance: e.balance,                            // saldo restante
     }
   })
 
@@ -157,9 +180,15 @@ export function calculateMortgageResults(
       hoaFees,
       totalMonthly: monthlyPI + taxes + insurance + hoaFees,
     },
-    pieChartData,
+    pieChartData: [
+      { name: 'Principal & interest', value: monthlyPI, fill: '#2B7FFF' },
+      { name: 'Property tax', value: taxes, fill: '#8E51FF' },
+      { name: 'Insurance', value: insurance, fill: '#00C950' },
+      { name: 'HOA fees', value: hoaFees, fill: '#00b8db' },
+    ],
     lineChartData,
     amortizationSchedule: schedule,
+    annualSummary,
     summary,
   }
 }
