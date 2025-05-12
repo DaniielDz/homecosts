@@ -349,19 +349,10 @@ export default function Calculator({
         <Button />
       </form>
       {error && <p className="text-red-500 font-bold">{error}</p>}
-      <Table
-        items={calculator.items.filter((item): item is Table_Item => 'item_title' in item && 'item_desc' in item)}
-        name={calculator.title}
-        type={calculator.type}
-        results={results}
-        inputLabel={calculator.type === "NORMAL" ? calculator.qtylabel : ""}
-        qtyValue={qtyValue}
-        duv={duv}
-      />
       {calculator.type === "SLIDERS" && (
-        <div className="w-full flex flex-col mx-auto gap-4 md:w-100">
+        <div className="w-full flex flex-col justify-start gap-4 md:w-100">
           {calculator.sliders_values?.map((cfg, idx) => {
-            const label = calculator.labels[idx] ?? "";       
+            const label = calculator.labels[idx] ?? "";
             return (
               <Slider
                 key={cfg.id}
@@ -376,21 +367,23 @@ export default function Calculator({
         </div>
       )}
       {calculator.type === "SELECTS_SLIDERS" && (
-        <div className="flex flex-col mx-auto gap-4 w-max md:w-100">
-          {calculator.sliderslabels.map((label, idx) => {
-            const cfg = calculator.sliders_values[idx];
+        <div className="flex flex-col w-max mx-auto md:flex-row pb-8 md:gap-20 md:w-full ">
+          <div>
+            {calculator.sliderslabels.map((label, idx) => {
+              const cfg = calculator.sliders_values[idx];
 
-            return (
-              <Slider
-                key={cfg.id}
-                label={label}
-                sliderValues={cfg}
-                variables={calculator.variables}
-                value={sliderValues[cfg.id]}
-                onChange={handleSliderChange}
-              />
-            );
-          })}
+              return (
+                <Slider
+                  key={cfg.id}
+                  label={label}
+                  sliderValues={cfg}
+                  variables={calculator.variables}
+                  value={sliderValues[cfg.id]}
+                  onChange={handleSliderChange}
+                />
+              );
+            })}
+          </div>
           <SelectsTable
             rowTitles={calculator.rowlabels}
             columnTitles={calculator.columnlabels}
@@ -398,6 +391,15 @@ export default function Calculator({
           />
         </div>
       )}
+      <Table
+        items={calculator.items.filter((item): item is Table_Item => 'item_title' in item && 'item_desc' in item)}
+        name={calculator.title}
+        type={calculator.type}
+        results={results}
+        inputLabel={calculator.type === "NORMAL" ? calculator.qtylabel : ""}
+        qtyValue={qtyValue}
+        duv={duv}
+      />
 
     </section>
   );

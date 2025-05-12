@@ -22,7 +22,7 @@ export default function Slider({ label, sliderValues, variables, value, onChange
       : `${value} ${variables.qu}`;
 
   return (
-    <div className="flex flex-col gap-4 w-full max-w-md p-4">
+    <div className="flex flex-col gap-4 w-full max-w-md p-4 pl-0">
       <div className="flex items-center gap-2">
         <span className="text-sm md:text-base text-gray-800 font-medium">{label}</span>
         <span className="text-sm md:text-base text-blue-700 font-medium">{display}</span>
