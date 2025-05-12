@@ -1,8 +1,9 @@
-export function OverviewSection({calculatorName, city, state}: {calculatorName: string, city?: string, state?: string}) {
+export function OverviewSection({ text, calculatorName, city, state }: { text:string, calculatorName: string, city?: string, state?: string }) {
+
     return (
         <section className='flex flex-col gap-4'>
             <p>
-                Wondering how much it costs to <strong>{calculatorName.toLocaleLowerCase()}{city ? ` in ${city}, ${state}` : ""}?</strong> Use our free <strong>{calculatorName}</strong> to get a fast, accurate estimate based on <strong>real-time material and labor costs</strong> in your area. Whether you&apos;re budgeting for a small <strong>DIY project</strong> or <strong>hiring a professional contractor</strong>, our tool helps you plan with confidence.
+                Wondering how much it <strong>{text.toLocaleLowerCase()} {city ? ` in ${city}, ${state}` : ""}?</strong> Use our free <strong>{calculatorName}</strong> to get a fast, accurate estimate based on <strong>real-time material and labor costs</strong> in your area. Whether you&apos;re budgeting for a small <strong>DIY project</strong> or <strong>hiring a professional contractor</strong>, our tool helps you plan with confidence.
             </p>
             <div>
                 <h3>Our estimates include:</h3>
