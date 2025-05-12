@@ -54,7 +54,7 @@ export default async function CityPage(props: { params: Params }) {
                 { name: "Home", href: "/" },
                 { name: categoryData.name || "Unknown Category", href: `/${categoryData.slug || ""}` },
                 { name: subCategoryData.name || "Unknown SubCategory", href: `/${categoryData.slug || ""}` },
-                { name: fullCalculator.listName || "Unknown Name", href: `/${fullCalculator.slug || ""}` },
+                { name: fullCalculator.title || "Unknown Name", href: `/${fullCalculator.slug || ""}` },
             ]} />
             <section className='flex flex-col-reverse xl:flex-row justify-center lg:items-center xl:items-start'>
                 <AsideContent
