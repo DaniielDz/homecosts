@@ -1,6 +1,7 @@
 export function NotesSection({
     calculatorName,
     projectType,
+    projectName,
     year,
     cityName,
     stateName,
@@ -11,6 +12,7 @@ export function NotesSection({
 }: {
     calculatorName: string,
     projectType: string,
+    projectName: string,
     year: number
     cityName?: string,
     stateName?: string,
@@ -24,9 +26,9 @@ export function NotesSection({
     return (
         <section className='flex flex-col gap-4'>
             <h2 className='text-[#111827] text-2xl font-semibold'>Notes for {calculatorName}</h2>
-            <p>In <strong>{year}</strong>, the estimated cost to <strong>{projectType}</strong> starts at <strong>{typeof(lowCost) === "string" ? `${lowCost} - ${highCost}` : `$${lowCost} - $${highCost}`}</strong> per {qtyLabel}. Use our <strong>{projectType}</strong> Cost Calculator for cost estimates customized to<strong>{cityName ? ` ${cityName}, ${stateName}` : ""}</strong>, <strong>{qty} {qtyLabel}</strong>, and selected materials and services.</p>
+            <p>In <strong>{year}</strong>, the estimated <strong>{projectType}</strong> starts at <strong>{typeof(lowCost) === "string" ? `${lowCost} - ${highCost}` : `$${lowCost} - $${highCost}`}</strong> per {qtyLabel}. Use our <strong>{calculatorName}</strong> for cost estimates customized to<strong>{cityName ? ` ${cityName}, ${stateName}` : ""}</strong>, <strong>{qty} {qtyLabel}</strong>, and selected materials and services.</p>
             <div>
-                <h3>To estimate costs for your <strong>{projectType}</strong> project:</h3>
+                <h3>To estimate costs for your <strong>{projectName}</strong> project:</h3>
                 <ol className='pl-2 flex flex-col gap-4'>
                     <li>
                         <h4 className='font-bold'>1. Set Project Zip Code</h4>
@@ -34,7 +36,7 @@ export function NotesSection({
                     </li>
                     <li>
                         <h4 className='font-bold'>2. Specify Project Size and Options</h4>
-                        <p className='pl-4'>Enter the total number of {qtyLabel} for your <strong>{projectType}</strong> project. <br />(If you&apos;re installing <strong>{projectType}</strong> in multiple rooms, sum the total area for accurate cost estimation.)</p>
+                        <p className='pl-4'>Enter the total number of {qtyLabel} for your <strong>{projectName}</strong> project. <br />(If you&apos;re installing <strong>{projectName}</strong> in multiple rooms, sum the total area for accurate cost estimation.)</p>
                     </li>
                     <li>
                         <h4 className='font-bold'>3. Select Materials and Labor Services</h4>
@@ -42,7 +44,7 @@ export function NotesSection({
                     </li>
                     <li>
                         <h4 className='font-bold'>4. Re-calculate</h4>
-                        <p className='pl-4'>Click the <strong>“Update”</strong> button to refresh the cost estimate based on your selections. <br />(This will update your total estimated costs for the <strong>{calculatorName}</strong> project.)</p>
+                        <p className='pl-4'>Click the <strong>“Update”</strong> button to refresh the cost estimate based on your selections. <br />(This will update your total estimated costs for the <strong>{projectName}</strong> project.)</p>
                     </li>
                 </ol>
             </div>

@@ -28,7 +28,7 @@ export default function CalculatorContent({
 
 
     const year = new Date().getFullYear()
-    const projectType = calculator.title.replace(/costs/i, '').trim()
+    
 
     const references = calculator.summarycontent
         .filter(item => item.tag === "UL")
@@ -79,7 +79,8 @@ export default function CalculatorContent({
 
             <NotesSection
                 calculatorName={calculator.name}
-                projectType={projectType}
+                projectType={calculator.title}
+                projectName={calculator.listName}
                 year={year}
                 cityName={city}
                 stateName={state}
