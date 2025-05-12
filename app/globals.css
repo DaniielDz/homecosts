@@ -22,7 +22,7 @@ input[type="range"].range-minimal::-webkit-slider-thumb {
   appearance: none;
   height: 16px;
   width: 16px;
-  background-color: #42bff5;
+  background-color: #155DFC;
   border-radius: 4px;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
   margin-top: -6px;
