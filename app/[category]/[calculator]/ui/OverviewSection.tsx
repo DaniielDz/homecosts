@@ -19,10 +19,10 @@ export function OverviewSection({ title, calculatorName, city, state }: { title:
       const dynamicText = `<strong>Wondering how much ${title.toLowerCase()}${city ? ` in ${city}, ${state}` : ''}?</strong>`;
 
     return (
-        <section className='flex flex-col gap-4'>
+        <section className='flex flex-col gap-4 text-sm md:text-base'>
             <div>
-                <p dangerouslySetInnerHTML={{ __html: fixGrammar(dynamicText)}} />
-                <p>
+                <p className="inline" dangerouslySetInnerHTML={{ __html: fixGrammar(dynamicText)}} />{' '}
+                <p className="inline">
                     Use our free <strong>{calculatorName}</strong> to get a fast, accurate estimate based on <strong>real-time material and labor costs</strong> in your area. Whether you&apos;re budgeting for a small <strong>DIY project</strong> or <strong>hiring a professional contractor</strong>, our tool helps you plan with confidence.
                 </p>
             </div>

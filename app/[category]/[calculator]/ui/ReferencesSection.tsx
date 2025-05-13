@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export function ReferencesSection({ references }: { references: summaryLink[] }) {
     return (
-        <section>
+        <section className="text-sm md:text-base">
             <h2 className='text-[#111827] text-2xl font-bold mb-4'>References</h2>
             <ul className='list-disc pl-6'>
                 {

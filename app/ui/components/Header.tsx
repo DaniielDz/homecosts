@@ -14,7 +14,7 @@ export default function Header() {
     };
 
     return (
-        <header className="w-full h-16 px-8 py-2.5 flex items-center justify-between md:justify-start gap-11 bg-[#1F2937] relative xl:pl-12">
+        <header className="w-full h-16 px-4 py-2.5 flex items-center justify-between md:justify-start gap-11 bg-[#1F2937] relative xl:pl-12">
             <Link href="/">
                 <Image
                     src="/logo.svg"

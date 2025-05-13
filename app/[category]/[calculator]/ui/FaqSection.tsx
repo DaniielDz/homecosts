@@ -3,8 +3,8 @@ import { FAQ } from "@/app/types/calculator";
 export function FaqSection({ calculatorName, faqs }: { calculatorName: string, faqs: FAQ[] }) {
 
     return (
-        <section>
-            <h2 className='text-[#111827] text-xl md:text-2xl font-bold mb-4 '>Frequently Asked Questions About {calculatorName}</h2>
+        <section className="text-sm md:text-base">
+            <h2 className='text-[#111827] text-2xl font-bold mb-4 '>Frequently Asked Questions About {calculatorName}</h2>
             <ol>
                 {faqs.map((faq, index) => (
                     <li key={index} className='mb-10 flex flex-col gap-3 text-gray-700'>

@@ -56,7 +56,7 @@ export function AsideContent({
     }
 
     return (
-        <aside className="w-full xl:w-[30%] p-8 pr-4 xl:pl-12 mt-8 flex flex-col gap-8 items-center md:items-start md:flex-row md:justify-around xl:flex-col">
+        <aside className="w-full xl:w-[30%] p-8 pr-4 xl:pl-12 mt-8 flex flex-col gap-8 items-start md:items-start md:flex-row md:justify-around xl:flex-col">
             <div className="flex flex-col gap-5 xl:mt-[640px] xl:mb-[290px]">
                 <p className="text-gray-900 text-base lg:text-lg font-semibold">Share This</p>
                 <div className="flex gap-4">

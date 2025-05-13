@@ -56,7 +56,7 @@ export default function CalculatorContent({
     }, [zipCodeValue])
 
     return (
-        <article className="flex flex-col gap-10 w-full p-4 lg:max-w-[875px] xl:w-[70%] xl:max-w-max xl:pr-40 lg:pl-0 text-[#374151]">
+        <article className="flex flex-col gap-8 md:gap-10 w-full p-4 lg:max-w-[875px] xl:w-[70%] xl:max-w-max xl:pr-40 lg:pl-0 text-[#374151]">
             <h1 className='text-2xl text-[#101828] font-bold'>
                 {`${calculator.title} ${city ? `in ${city}, ${state}` : ''} (${year})`}
             </h1>
