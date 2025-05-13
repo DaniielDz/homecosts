@@ -24,7 +24,7 @@ export function SelectInput({
 }: SelectInputProps) {
     return (
         <div className="flex flex-col w-full">
-            <label className="flex items-center justify-between text-sm text-gray-900 font-semibold mb-2">
+            <label className="flex items-center justify-between text-sm md:text-base text-gray-900 font-semibold mb-2">
                 {label}
                 <ToolTip tooltipText="Select the duration of the loan term." />
             </label>
@@ -33,7 +33,7 @@ export function SelectInput({
                 <select
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
-                    className="block w-full appearance-none border border-gray-300 rounded-md py-2 pl-6.5 pr-8 text-gray-700 focus:outline-none focus:border-blue-500"
+                    className="block w-full appearance-none border border-gray-300 rounded-md py-2 pl-4 pr-8 text-gray-700 focus:outline-none focus:border-blue-500"
                 >
                     {options.map((opt) => (
                         <option key={opt.value} value={opt.value}>

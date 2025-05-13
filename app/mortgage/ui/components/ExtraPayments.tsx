@@ -41,15 +41,15 @@ export function ExtraPayments({
     return (
         <div className="w-full max-w-sm bg-gray-50 shadow-md rounded-lg">
             <div className="p-6">
-                <h3 className="text-sm text-gray-900 font-semibold">Optional: Make extra payments</h3>
-                <p className="mt-1 text-sm text-gray-500 leading-6">
+                <h3 className="text-sm md:text-base text-gray-900 font-semibold">Optional: Make extra payments</h3>
+                <p className="mt-1 text-sm md:text-base text-gray-500 leading-6">
                     By adding extra payments, you can pay off your loan and save on interest.
                 </p>
             </div>
             <div className="border-t border-gray-300 flex flex-col gap-4 p-6">
                 {/* Loan start date */}
                 <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-900 mb-2">Loan start date</label>
+                    <label className="text-sm md:text-base font-medium text-gray-900 mb-2">Loan start date</label>
                     <div className="relative">
                         <input
                             type="month"
@@ -62,7 +62,7 @@ export function ExtraPayments({
 
                 {/* Additional monthly payment */}
                 <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-900 mb-2">Additional amount to monthly payment</label>
+                    <label className="text-sm md:text-base font-medium text-gray-900 mb-2">Additional amount to monthly payment</label>
                     <div className="relative">
                         <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none">$</span>
                         <input
@@ -76,7 +76,7 @@ export function ExtraPayments({
 
                 {/* Additional yearly payment */}
                 <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-900 mb-2">Additional yearly payment</label>
+                    <label className="text-sm md:text-base font-medium text-gray-900 mb-2">Additional yearly payment</label>
                     <div className="relative">
                         <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none">$</span>
                         <input
@@ -90,7 +90,7 @@ export function ExtraPayments({
 
                 {/* One-time additional payment */}
                 <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-900 mb-2">One-time additional payment on</label>
+                    <label className="text-sm md:text-base font-medium text-gray-900 mb-2">One-time additional payment on</label>
                     <div className="grid grid-cols-2 gap-3">
                         <div className="relative">
                             <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none">$</span>

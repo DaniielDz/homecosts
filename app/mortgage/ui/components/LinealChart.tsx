@@ -90,7 +90,7 @@ export function LinealChart({
                   if (!active || !payload || !payload.length) return null
 
                   return (
-                    <div className="bg-white rounded-md shadow-md p-3 text-sm text-gray-900 space-y-2">
+                    <div className="bg-white rounded-md shadow-md p-3 text-sm md:text-base text-gray-900 space-y-2">
                       {payload.map((entry: any) => {
                         const serie = series.find(s => s.key === entry.dataKey)
                         return (
@@ -124,7 +124,7 @@ export function LinealChart({
 
       {/* Interactive panel */}
       <div className="mt-4 w-full max-w-md mx-auto bg-white ">
-        <div className="px-4 py-2 mt-6 mb-2 text-sm text-right text-gray-900 font-semibold">
+        <div className="px-4 py-2 mt-6 mb-2 text-sm md:text-base text-right text-gray-900 font-semibold">
           As of {activeDate}
         </div>
         <ul className="flex flex-col gap-4">
@@ -132,9 +132,9 @@ export function LinealChart({
             <li key={s.key} className="flex justify-between px-4 py-2 items-center">
               <div className="flex items-center gap-2">
                 <span className="w-6 h-6 rounded-full" style={{ backgroundColor: s.color }} />
-                <span className="text-sm text-gray-900">{s.label}</span>
+                <span className="text-sm md:text-base text-gray-900">{s.label}</span>
               </div>
-              <span className="text-sm font-medium text-gray-900">
+              <span className="text-sm md:text-base font-medium text-gray-900">
                 ${formatNumber(Number(active[s.key as keyof LineDatum]), 2)}
               </span>
             </li>

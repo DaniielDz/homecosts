@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react"
 import ToolTip from "./Tooltip"
 import { formatNumber } from "../../utils/formatNumber"
+import clsx from "clsx"
 
 interface PriceInputProps {
     label: string
@@ -27,7 +28,7 @@ export function PriceInput({
     useEffect(() => {
         if (!isFocused) {
             const num = typeof value === "string" ? parseFloat(value) || 0 : value
-            setDisplayValue(formatNumber(num,2))
+            setDisplayValue(formatNumber(num,3))
         }
     }, [value, isFocused])
 
@@ -66,7 +67,7 @@ export function PriceInput({
 
     return (
         <div className="flex flex-col">
-            <label className="flex items-center justify-between text-sm text-gray-900 font-semibold mb-2">
+            <label className="flex items-center justify-between text-sm md:text-base text-gray-900 font-semibold mb-2">
                 {label}
                 {tooltipText && <ToolTip tooltipText={tooltipText} />}
             </label>
@@ -82,7 +83,10 @@ export function PriceInput({
                     onChange={handleChange}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
-                    className="block w-full rounded-md border border-gray-300 pl-7 pr-12 py-2 focus:outline-none focus:border-blue-500"
+                    className={clsx(
+                        "block w-full rounded-md border border-gray-300 pr-12 py-2 focus:outline-none focus:border-blue-500",
+                        label == "Interest rate" ? "pl-4" : "pl-7"
+                    )}
                 />
                 {suffix && (
                     <span className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 pointer-events-none">

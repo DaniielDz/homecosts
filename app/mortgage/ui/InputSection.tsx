@@ -76,7 +76,7 @@ export function InputSection({
                 />
                 <div
                     onClick={() => setIsFull((v) => !v)}
-                    className="w-full max-w-max m-auto flex items-center gap-4 text-gray-900 font-normal text-sm group hover:text-blue-700 transition-all duration-300 cursor-pointer"
+                    className="w-full max-w-max m-auto flex items-center gap-4 text-gray-900 font-normal text-sm md:text-base group hover:text-blue-700 transition-all duration-300 cursor-pointer"
                 >
                     Taxes, insurance, HOA fees
                     <ChevronDown
@@ -121,7 +121,7 @@ export function InputSection({
                     )}
                 </AnimatePresence>
                 <button
-                    className="w-full h-10.5 bg-blue-600 text-white font-semibold text-sm py-2 px-4 rounded-md shadow-md cursor-pointer hover:bg-blue-700 transition-all duration-300"
+                    className="w-full h-10.5 bg-blue-600 text-white font-semibold text-sm md:text-base py-2 px-4 rounded-md shadow-md cursor-pointer hover:bg-blue-700 transition-all duration-300"
                     onClick={onUpdate}
                 >
                     Update

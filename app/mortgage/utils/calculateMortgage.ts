@@ -7,7 +7,6 @@ export interface MortgageInputs {
   insurance: number      // monthly
   hoaFees: number        // monthly
 
-  // Extras
   startDate: string      // YYYY-MM for schedule start
   extraMonthly?: number  // additional monthly payment
   extraYearly?: number   // additional yearly payment on anniversary
@@ -29,11 +28,10 @@ export interface PieDatum {
   fill: string
 }
 
-/** Datos para Line Chart */
 export interface LineDatum {
   date: string
-  principalPaid: number  // cumulative principal paid up to this date
-  interestPaid: number   // cumulative interest paid up to this date
+  principalPaid: number 
+  interestPaid: number  
   loanBalance: number
 }
 
@@ -46,8 +44,8 @@ export interface Summary {
 
 export interface YearlySummary {
   year: number
-  principal: number   // suma de principal pagado en ese año
-  interest: number    // suma de interés pagado en ese año
+  principal: number 
+  interest: number  
 }
 
 export interface MortgageResults {
@@ -61,11 +59,10 @@ export interface MortgageResults {
   }
   pieChartData: PieDatum[]
   lineChartData: LineDatum[]
-  amortizationSchedule: ScheduleEntry[]    // pagos mes a mes
-  annualSummary: YearlySummary[]          // resumen por año
+  amortizationSchedule: ScheduleEntry[]  
+  annualSummary: YearlySummary[]        
   summary: Summary
 }
-
 
 export function calculateMortgageResults(
   inputs: MortgageInputs
@@ -83,112 +80,149 @@ export function calculateMortgageResults(
     extraYearly = 0,
     oneTimeAmount = 0,
     oneTimeDate,
-  } = inputs
+  } = inputs;
 
-  // Base loan calculation
-  const loanAmount = price - downPayment
-  const monthlyRate = annualRate / 100 / 12
-  const n = termYears * 12
-  const monthlyPI = monthlyRate * loanAmount / (1 - Math.pow(1 + monthlyRate, -n))
-
-  // Preparar el bucle de amortización
-  const [startYear, startMonth] = startDate.split('-').map((v) => parseInt(v, 10))
-  let balance = loanAmount
-
-  const schedule: ScheduleEntry[] = []
-
-  for (let i = 0; i < n; i++) {
-    const monthIndex = startMonth - 1 + i
-    const year = startYear + Math.floor(monthIndex / 12)
-    const month = (monthIndex % 12) + 1
-    const ym = `${year}-${String(month).padStart(2, '0')}`
-
-    // intereses y principal programado este mes
-    const interestThisMonth = balance * monthlyRate
-    const principalScheduled = monthlyPI - interestThisMonth
-
-    // extras
-    const extraAnniversary = month === startMonth ? extraYearly : 0
-    const extraOneTime = oneTimeDate === ym ? oneTimeAmount : 0
-    const totalExtra = extraMonthly + extraAnniversary + extraOneTime
-
-    // principal total este mes
-    const principalThisMonth = principalScheduled + totalExtra
-
-    // actualizar balance
-    balance = Math.max(balance - principalThisMonth, 0)
-
-    // guardo solo lo pagado este mes
-    schedule.push({
-      date: year + '-' + String(month).padStart(2, '0'),
-      principal: parseFloat(principalThisMonth.toFixed(2)),
-      interest: parseFloat(interestThisMonth.toFixed(2)),
-      balance: parseFloat(balance.toFixed(2)),
-    })
+  if (price <= 0 || downPayment < 0 || termYears <= 0 || annualRate < 0) {
+    throw new Error("Parámetros inválidos");
   }
 
-  // Construir resumen anual (suma mes a mes)
-  const yearlyMap = new Map<number, { principal: number; interest: number }>()
-  schedule.forEach(({ date, principal, interest }) => {
-    const y = parseInt(date.slice(0, 4), 10)
-    if (!yearlyMap.has(y)) {
-      yearlyMap.set(y, { principal: 0, interest: 0 })
+  const loanAmount = price - downPayment;
+  const monthlyRate = annualRate / 100 / 12;
+  const totalMonths = termYears * 12;
+
+  const monthlyPI = loanAmount *
+    (monthlyRate * Math.pow(1 + monthlyRate, totalMonths)) /
+    (Math.pow(1 + monthlyRate, totalMonths) - 1);
+
+  const [startYear, startMonth] = startDate.split('-').map(Number);
+  const firstPaymentDate = new Date(startYear, startMonth, 1);
+  firstPaymentDate.setMonth(firstPaymentDate.getMonth());
+
+  let balance = loanAmount;
+  const monthlySchedule: ScheduleEntry[] = [];
+  const originalStartMonth = new Date(startYear, startMonth, 1).getMonth();
+
+  for (let monthOffset = 0; monthOffset < totalMonths && balance > 0; monthOffset++) {
+    const currentDate = new Date(firstPaymentDate);
+    currentDate.setMonth(firstPaymentDate.getMonth() + monthOffset);
+
+    const year = currentDate.getFullYear();
+    const monthNumber = currentDate.getMonth() + 1;
+    const ym = `${year}-${String(monthNumber).padStart(2, '0')}`;
+
+    const interest = balance * monthlyRate;
+    let scheduledPrincipal = monthlyPI - interest;
+    scheduledPrincipal = Math.min(scheduledPrincipal, balance);
+
+    const isAnniversary = currentDate.getMonth() === originalStartMonth;
+    const extraAnniversary = isAnniversary ? extraYearly : 0;
+    const extraOneTime = oneTimeDate === ym ? oneTimeAmount : 0;
+    const totalExtra = Math.min(
+      extraMonthly + extraAnniversary + extraOneTime,
+      balance - scheduledPrincipal
+    );
+
+    const totalPrincipal = scheduledPrincipal + totalExtra;
+    const newBalance = balance - totalPrincipal;
+
+    monthlySchedule.push({
+      date: ym,
+      principal: +totalPrincipal.toFixed(2),
+      interest: +interest.toFixed(2),
+      balance: +newBalance.toFixed(2),
+    });
+
+    balance = newBalance;
+  }
+
+  const lastScheduleEntry = monthlySchedule[monthlySchedule.length - 1];
+  const rawPayoffDate = lastScheduleEntry?.date ?? '';
+
+
+  // === ANUAL SUMMARY ===
+  const yearMap = new Map<number, YearlySummary>();
+  const lineChartData: LineDatum[] = [];
+
+  let cumulativePrincipal = 0;
+  let cumulativeInterest = 0;
+
+  for (const entry of monthlySchedule) {
+    const [yStr] = entry.date.split('-');
+    const year = parseInt(yStr);
+
+    if (!yearMap.has(year)) {
+      yearMap.set(year, {
+        year,
+        principal: 0,
+        interest: 0,
+      });
     }
-    const entry = yearlyMap.get(y)!
-    entry.principal += principal
-    entry.interest += interest
-  })
-  const annualSummary: YearlySummary[] = Array.from(yearlyMap.entries())
-    .map(([year, { principal, interest }]) => ({
+
+    const summary = yearMap.get(year)!;
+    summary.principal += entry.principal;
+    summary.interest += entry.interest;
+
+    cumulativePrincipal += entry.principal;
+    cumulativeInterest += entry.interest;
+
+    lineChartData.push({
+      date: entry.date,
+      principalPaid: +cumulativePrincipal.toFixed(2),
+      interestPaid: +cumulativeInterest.toFixed(2),
+      loanBalance: entry.balance,
+    });
+  }
+
+  const annualSummary: YearlySummary[] = [];
+  let runningPrincipal = 0;
+  let runningInterest = 0;
+
+  for (const year of [...yearMap.keys()].sort()) {
+    const summary = yearMap.get(year)!;
+    runningPrincipal += summary.principal;
+    runningInterest += summary.interest;
+
+    annualSummary.push({
       year,
-      principal: parseFloat(principal.toFixed(2)),
-      interest: parseFloat(interest.toFixed(2)),
-    }))
-    .sort((a, b) => a.year - b.year)
-
-  // Summary general
-  const totalInterest = annualSummary.reduce((sum, y) => sum + y.interest, 0)
-  const payoffDate = new Date(`${schedule[schedule.length - 1].date}-01`)
-    .toLocaleString('en-US', { month: 'short', year: 'numeric' })
-
-  const summary: Summary = {
-    loanAmount,
-    totalInterest,
-    totalCost: loanAmount + totalInterest,
-    payoffDate,
+      principal: +runningPrincipal.toFixed(2),
+      interest: +runningInterest.toFixed(2),
+    });
   }
 
-  let cumPrincipal = 0
-  let cumInterest = 0
-  const lineChartData: LineDatum[] = schedule.map(e => {
-    cumPrincipal += e.principal
-    cumInterest += e.interest
-    return {
-      date: e.date,
-      principalPaid: parseFloat(cumPrincipal.toFixed(2)),  // acumulado
-      interestPaid: parseFloat(cumInterest.toFixed(2)),   // acumulado
-      loanBalance: e.balance,                            // saldo restante
-    }
-  })
+  const totalInterest = cumulativeInterest;
+  const totalCost = loanAmount + totalInterest;
+
+  const paymentBreakdown = {
+    principalInterest: +monthlyPI.toFixed(2),
+    propertyTax: +taxes,
+    insurance: +insurance,
+    hoaFees: +hoaFees,
+    totalMonthly: +(monthlyPI + taxes + insurance + hoaFees).toFixed(2),
+  };
+
+  const pieChartData: PieDatum[] = [
+    { name: 'Principal', value: +loanAmount.toFixed(2), fill: '#4CAF50' },
+    { name: 'Interest', value: +totalInterest.toFixed(2), fill: '#F44336' },
+  ];
 
   return {
-    monthlyPaymentPI: monthlyPI,
-    paymentBreakdown: {
-      principalInterest: monthlyPI,
-      propertyTax: taxes,
-      insurance,
-      hoaFees,
-      totalMonthly: monthlyPI + taxes + insurance + hoaFees,
-    },
-    pieChartData: [
-      { name: 'Principal & interest', value: monthlyPI, fill: '#2B7FFF' },
-      { name: 'Property tax', value: taxes, fill: '#8E51FF' },
-      { name: 'Insurance', value: insurance, fill: '#00C950' },
-      { name: 'HOA fees', value: hoaFees, fill: '#00b8db' },
-    ],
+    monthlyPaymentPI: +monthlyPI.toFixed(2),
+    paymentBreakdown,
+    pieChartData,
     lineChartData,
-    amortizationSchedule: schedule,
+    amortizationSchedule: monthlySchedule,
     annualSummary,
-    summary,
-  }
+    summary: {
+      loanAmount: +loanAmount.toFixed(2),
+      totalInterest: +totalInterest.toFixed(2),
+      totalCost: +totalCost.toFixed(2),
+      payoffDate: formatDateToLabel(rawPayoffDate)
+    },
+  };
+}
+
+function formatDateToLabel(dateStr: string): string {
+  const [year, month] = dateStr.split('-').map(Number);
+  const date = new Date(year, month - 1, 1);
+  return date.toLocaleString("en-US", { month: "short", year: "numeric" });
 }

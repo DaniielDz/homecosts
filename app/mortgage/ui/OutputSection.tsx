@@ -48,13 +48,13 @@ export function OutputSection({
             <div className="flex flex-col items-center justify-center w-full h-full mt-10">
                 <div className="text-center">
                     <h2 className="text-gray-700 text-lg font-medium">No Results Found</h2>
-                    <p className="text-gray-500 text-sm mt-2">Please adjust your inputs and click on Update to see the results.</p>
+                    <p className="text-gray-500 text-sm md:text-base mt-2">Please adjust your inputs and click on Update to see the results.</p>
                 </div>
             </div>
         );
     }
 
-    const { paymentBreakdown, amortizationSchedule, summary } = results
+    const { paymentBreakdown, amortizationSchedule, summary, annualSummary } = results
 
     return (
         isAmortization ? (
@@ -72,12 +72,13 @@ export function OutputSection({
                 schedule={amortizationSchedule}
                 summary={summary}
                 lineChartData={results.lineChartData}
+                annualSummary={annualSummary}
             />
         ) : (
             <div className="flex flex-col w-full h-full mt-6">
                 <div className="flex flex-col gap-2">
                     <h2 className="text-gray-900 text-xl font-semibold">Monthly payment breakdown</h2>
-                    <p className="text-gray-500 text-sm">Based on national average rates</p>
+                    <p className="text-gray-500 text-sm md:text-base">Based on national average rates</p>
                 </div>
                 <div className="flex flex-col items-center md:flex-row md:items-start justify-between gap-6">
                     <PieChartText

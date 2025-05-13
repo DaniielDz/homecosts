@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { AmortizationCard } from "./components/AmortizationCard";
 import { ExtraPayments } from "./components/ExtraPayments";
 import { LinealChart } from "./components/LinealChart";
@@ -21,6 +20,11 @@ export interface AmortizationProps {
     schedule: ScheduleEntry[]
     summary: Summary
     lineChartData: LineDatum[]
+    annualSummary: {
+        year: number
+        principal: number
+        interest: number
+    }[]
 }
 
 export function Amortization({
@@ -36,14 +40,14 @@ export function Amortization({
     setOneTimeDate,
     schedule,
     summary,
-    lineChartData
+    lineChartData,
+    annualSummary
 }: AmortizationProps) {
-    const [first, setFirst] = useState("2025-04");
-
+    
     return (
         <div className="flex flex-col w-full h-full mt-6">
             <h2 className="mb-2 text-xl text-gray-900 font-semibold text-left">Amortization for mortgage loan</h2>
-            <p className="text-sm leading-7 font-semibold text-gray-500 w-full max-w-[810px]">Amortization is paying off debt over time in equal installments. As the term of your mortgage loan progresses, a larger
+            <p className="text-sm md:text-base leading-7 font-semibold text-gray-500 w-full max-w-[810px]">Amortization is paying off debt over time in equal installments. As the term of your mortgage loan progresses, a larger
                 share of your payment goes toward paying down the principal until the loan is paid in full at the end of your term.</p>
             <div className="grid grid-cols-2 justify-items-center md:flex gap-2 mt-6">
                 <AmortizationCard title="Loan amount" value={`$${formatNumber(summary.loanAmount, 0)}`} />
@@ -78,8 +82,9 @@ export function Amortization({
             </div>
             <AmortizationSchedule
                 schedule={schedule}
-                firstPayment={first}
-                onFirstPaymentChange={setFirst}
+                annualSummary={annualSummary}
+                startDate={startDate}
+                onStartDateChange={setStartDate}
             />
         </div>
     );

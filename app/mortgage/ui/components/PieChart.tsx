@@ -13,7 +13,6 @@ export interface PieChartTextProps {
 }
 
 export function PieChartText({ data, total, label = "/mo" }: PieChartTextProps) {
-  // Configuración de leyenda y colores
   const config = React.useMemo(() => {
     const map: Record<string, { label: string; color: string }> = {}
     data.forEach(d => {
@@ -42,7 +41,7 @@ export function PieChartText({ data, total, label = "/mo" }: PieChartTextProps) 
                       return (
                         <div key={idx} className="flex items-center gap-2">
                           <span className="w-3 h-3 rounded-full" style={{ backgroundColor: fill }} />
-                          <span className="text-sm text-gray-700">{lbl}:</span>
+                          <span className="text-sm md:text-base text-gray-700">{lbl}:</span>
                           <span className="font-semibold text-gray-900">
                             ${formatNumber(value, 1)}
                           </span>
@@ -74,7 +73,7 @@ export function PieChartText({ data, total, label = "/mo" }: PieChartTextProps) 
                         dominantBaseline="middle"
                       >
                         <tspan x={viewBox.cx} y={viewBox.cy} className="fill-foreground text-lg font-semibold text-gray-900">
-                          ${formatNumber(total, 0)} <tspan className="text-sm font-normal">{label}</tspan>
+                          ${formatNumber(total, 0)} <tspan className="text-sm md:text-base font-normal">{label}</tspan>
                         </tspan>
                       </text>
                     )
