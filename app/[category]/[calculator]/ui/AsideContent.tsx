@@ -58,7 +58,7 @@ export function AsideContent({
     return (
         <aside className="w-full xl:w-[30%] p-8 pr-4 xl:pl-12 mt-8 flex flex-col gap-8 items-start md:items-start md:flex-row md:justify-around xl:flex-col">
             <div className="flex flex-col gap-5 xl:mt-[640px] xl:mb-[290px]">
-                <p className="text-gray-900 text-base lg:text-lg font-semibold">Share This</p>
+                <p className="text-gray-900 text-lg font-semibold">Share This</p>
                 <div className="flex gap-4">
                     {Object.entries(socialLinks).map(([key, href]) => (
                         <button
@@ -74,7 +74,7 @@ export function AsideContent({
             </div>
 
             <div className="flex flex-col gap-5 xl:mt-10">
-                <p className="text-gray-900 text-base lg:text-lg font-semibold">
+                <p className="text-gray-900 text-lg font-semibold">
                     Explore Related Calculators
                 </p>
                 <ul>

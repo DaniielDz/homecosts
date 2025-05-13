@@ -3,7 +3,7 @@ import { FAQ } from "@/app/types/calculator";
 export function FaqSection({ calculatorName, faqs }: { calculatorName: string, faqs: FAQ[] }) {
 
     return (
-        <section className="text-sm md:text-base">
+        <section className="text-base">
             <h2 className='text-[#111827] text-2xl font-bold mb-4 '>Frequently Asked Questions About {calculatorName}</h2>
             <ol>
                 {faqs.map((faq, index) => (
@@ -13,7 +13,7 @@ export function FaqSection({ calculatorName, faqs }: { calculatorName: string, f
                             {faq.title}
                         </h3>
                         <p
-                            className='text-sm md:text-base'
+                            className='text-base'
                             dangerouslySetInnerHTML={{ __html: faq.intro || '' }}></p>
                         <div>
                             {faq.list?.title && (
@@ -22,7 +22,7 @@ export function FaqSection({ calculatorName, faqs }: { calculatorName: string, f
                                 </h4>
                             )}
                             {faq.list?.items && (
-                                <ul className='list-disc list-inside pl-6 text-sm md:text-base'>
+                                <ul className='list-disc list-inside pl-6 text-base'>
                                     {faq.list.items.map((item, itemIndex) => (
                                         <li
                                             className="mb-2"
@@ -36,7 +36,7 @@ export function FaqSection({ calculatorName, faqs }: { calculatorName: string, f
                             )}
                         </div>
                         <p
-                            className='text-sm md:text-base'
+                            className='text-base'
                             dangerouslySetInnerHTML={{ __html: faq.outro || '' }}></p>
                     </li>
                 ))}

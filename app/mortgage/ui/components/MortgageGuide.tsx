@@ -136,7 +136,7 @@ const sections: Section[] = [
         title: `How to calculate your payments using a mortgage calculator in ${new Date().getFullYear()}`,
         content: (
             <>
-                <p className="text-sm text-gray-700 my-6">A mortgage calculator helps you estimate your monthly mortgage payments based on key financial inputs. Here&apos;s how to use it step by step:</p>
+                <p className="text-base text-gray-700 my-6">A mortgage calculator helps you estimate your monthly mortgage payments based on key financial inputs. Here&apos;s how to use it step by step:</p>
                 <ol className="space-y-5">
                     {steps[0].map((step, index) => (
                         <ListItem key={index} title={`${index + 1}. ${step.title}`} text={step.text} />
@@ -163,7 +163,7 @@ const sections: Section[] = [
         title: "What's included in a typical mortgage payment?",
         content: (
             <>
-                <p className="text-sm text-gray-700 my-6">Understanding what makes up your monthly mortgage payment is essential for accurate budgeting and financial planning. While your payment may seem like a single number, it often includes several components bundled together:</p>
+                <p className="text-base text-gray-700 my-6">Understanding what makes up your monthly mortgage payment is essential for accurate budgeting and financial planning. While your payment may seem like a single number, it often includes several components bundled together:</p>
                 <ol className="space-y-5">
                     {steps[1].map((step, index) => (
                         <ListItem key={index} title={`${index + 1}. ${step.title}`} text={step.text} />
@@ -177,13 +177,13 @@ const sections: Section[] = [
         title: "Why use a mortgage calculator?",
         content: (
             <>
-                <p className="text-sm text-gray-700 my-6">A mortgage calculator is an essential tool for anyone planning to buy a home, refinance, or simply understand their financial options. Whether you&apos;re a first-time buyer or comparing loan offers, using a calculator can help you make smarter decisions — fast.</p>
+                <p className="text-base text-gray-700 my-6">A mortgage calculator is an essential tool for anyone planning to buy a home, refinance, or simply understand their financial options. Whether you&apos;re a first-time buyer or comparing loan offers, using a calculator can help you make smarter decisions — fast.</p>
                 <ol className="space-y-5">
                     {steps[2].map((step, index) => (
                         <ListItem key={index} title={`${index + 1}. ${step.title}`} text={step.text} />
                     ))}
                 </ol>
-                <p className="text-sm text-gray-700 my-6">A mortgage calculator gives you instant answers, saves time, and removes the guesswork from one of the biggest financial decisions you&apos;ll ever make. Simply enter your details above to get started — and take control of your home financing journey with clarity and confidence.</p>
+                <p className="text-base text-gray-700 my-6">A mortgage calculator gives you instant answers, saves time, and removes the guesswork from one of the biggest financial decisions you&apos;ll ever make. Simply enter your details above to get started — and take control of your home financing journey with clarity and confidence.</p>
             </>
         ),
     },
@@ -191,13 +191,13 @@ const sections: Section[] = [
         title: "How much house can I afford?",
         content: (
             <>
-                <p className="text-sm text-gray-700 my-6">Knowing how much house you can afford is one of the most important steps in the homebuying process. It ensures you shop within your budget, avoid surprises, and make confident financial decisions based on your income, debt, and long-term goals.</p>
+                <p className="text-base text-gray-700 my-6">Knowing how much house you can afford is one of the most important steps in the homebuying process. It ensures you shop within your budget, avoid surprises, and make confident financial decisions based on your income, debt, and long-term goals.</p>
                 <ol className="space-y-5">
                     {steps[3].map((step, index) => (
                         <ListItem key={index} title={`${index + 1}. ${step.title}`} text={step.text} />
                     ))}
                 </ol>
-                <p className="text-sm text-gray-700 my-6">Using a mortgage affordability calculator can quickly crunch these numbers and help you understand your realistic price range. It’s the easiest way to set a smart homebuying budget — before you start touring properties or applying for pre-approval.</p>
+                <p className="text-base text-gray-700 my-6">Using a mortgage affordability calculator can quickly crunch these numbers and help you understand your realistic price range. It’s the easiest way to set a smart homebuying budget — before you start touring properties or applying for pre-approval.</p>
             </>
         ),
     },
@@ -205,13 +205,13 @@ const sections: Section[] = [
         title: "How can I lower my monthly mortgage payment?",
         content: (
             <>
-                <p className="text-sm text-gray-700 my-6">If your mortgage payments feel too high—or you’re planning ahead and want to reduce costs—there are several smart strategies that can help lower your monthly mortgage bill. Even small adjustments can lead to significant savings over time.</p>
+                <p className="text-base text-gray-700 my-6">If your mortgage payments feel too high—or you’re planning ahead and want to reduce costs—there are several smart strategies that can help lower your monthly mortgage bill. Even small adjustments can lead to significant savings over time.</p>
                 <ol className="space-y-5">
                     {steps[4].map((step, index) => (
                         <ListItem key={index} title={`${index + 1}. ${step.title}`} text={step.text} />
                     ))}
                 </ol>
-                <p className="text-sm text-gray-700 my-6">By combining several of these strategies, you can significantly reduce your monthly mortgage payment and free up more room in your budget. Use our mortgage calculator above to test different scenarios and instantly see how each change could impact your payment.</p>
+                <p className="text-base text-gray-700 my-6">By combining several of these strategies, you can significantly reduce your monthly mortgage payment and free up more room in your budget. Use our mortgage calculator above to test different scenarios and instantly see how each change could impact your payment.</p>
             </>
         ),
     },
@@ -223,7 +223,7 @@ export default function MortgageGuide() {
             {sections.map((section, index) => (
                 <div key={index}>
                     <h2 className="text-xl font-bold text-gray-900 mt-6">{section.title}</h2>
-                    <div className="text-gray-700 text-sm leading-6">{section.content}</div>
+                    <div className="text-gray-700 text-base leading-6">{section.content}</div>
                 </div>
             ))}
         </div>

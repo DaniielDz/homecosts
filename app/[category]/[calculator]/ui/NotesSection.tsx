@@ -24,7 +24,7 @@ export function NotesSection({
 
 
     return (
-        <section className='flex flex-col gap-4 text-sm md:text-base'>
+        <section className='flex flex-col gap-4 text-base'>
             <h2 className='text-[#111827] text-2xl font-semibold'>Notes for {calculatorName}</h2>
             <p>In <strong>{year}</strong>, the estimated <strong>{projectType}</strong> starts at <strong>{typeof(lowCost) === "string" ? `${lowCost} - ${highCost}` : `$${lowCost} - $${highCost}`}</strong> per {qtyLabel}. Use our <strong>{calculatorName}</strong> for cost estimates customized to<strong>{cityName ? ` ${cityName}, ${stateName}` : ""}</strong>, <strong>{qty} {qtyLabel}</strong>, and selected materials and services.</p>
             <div>

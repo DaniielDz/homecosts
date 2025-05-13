@@ -1,25 +1,35 @@
 export function OverviewSection({ title, calculatorName, city, state }: { title: string, calculatorName: string, city?: string, state?: string }) {
 
     function fixGrammar(text: string) {
+        if (/\bcost to\b/i.test(text)) {
+            return text.replace(/\bcost to\b/gi, 'it costs to');
+        }
+        console.log("pasó");
+        
+    
         let corrected = text.replace(/\bhow much it cost to\b/gi, 'how much it costs to')
                             .replace(/\bhow much cost to\b/gi, 'how much it costs to');
-        const isGerundOrSubject = /\b(remodeling|installation|construction|staining|painting|repair|assembl(y|ing)|design|renovation)\b/i.test(title);
+    
+        const isGerundOrSubject = /\b(remodeling|installation|construction|install|remodel|reno|update|updating|new|makeover|staining|painting|repair|assembl(?:y|ing)|design|renovation)\b/i.test(text);
     
         if (isGerundOrSubject) {
-          corrected = corrected.replace(/\bhow much it\b/gi, 'how much')
-                              .replace(/\bcosts\?\s*$/i, '?'); // Eliminar "costs" duplicado al final
+            // Quitar el "it"
+            corrected = corrected.replace(/\bhow much it\b/gi, 'how much')
+                                 .replace(/\bcosts\?\s*$/i, '?');
         } else {
-          corrected = corrected.replace(/\bhow much\b(?! it)/gi, 'how much it')
-                              .replace(/\bcosts\?\s*$/i, '?'); // Eliminar "costs" duplicado al final
+            // Asegurarse de que tenga "it"
+            corrected = corrected.replace(/\bhow much\b(?! it)/gi, 'how much it')
+                                 .replace(/\bcosts\?\s*$/i, '?');
         }
     
         return corrected;
-      }
+    }
+    
     
       const dynamicText = `<strong>Wondering how much ${title.toLowerCase()}${city ? ` in ${city}, ${state}` : ''}?</strong>`;
 
     return (
-        <section className='flex flex-col gap-4 text-sm md:text-base'>
+        <section className='flex flex-col gap-4 text-base'>
             <div>
                 <p className="inline" dangerouslySetInnerHTML={{ __html: fixGrammar(dynamicText)}} />{' '}
                 <p className="inline">
