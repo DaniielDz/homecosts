@@ -4,7 +4,6 @@ export function OverviewSection({ title, calculatorName, city, state }: { title:
         if (/\bcost to\b/i.test(text)) {
             return text.replace(/\bcost to\b/gi, 'it costs to');
         }
-        console.log("pasó");
         
     
         let corrected = text.replace(/\bhow much it cost to\b/gi, 'how much it costs to')
@@ -13,11 +12,9 @@ export function OverviewSection({ title, calculatorName, city, state }: { title:
         const isGerundOrSubject = /\b(remodeling|installation|construction|install|remodel|reno|update|updating|new|makeover|staining|painting|repair|assembl(?:y|ing)|design|renovation)\b/i.test(text);
     
         if (isGerundOrSubject) {
-            // Quitar el "it"
             corrected = corrected.replace(/\bhow much it\b/gi, 'how much')
                                  .replace(/\bcosts\?\s*$/i, '?');
         } else {
-            // Asegurarse de que tenga "it"
             corrected = corrected.replace(/\bhow much\b(?! it)/gi, 'how much it')
                                  .replace(/\bcosts\?\s*$/i, '?');
         }

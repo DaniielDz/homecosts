@@ -81,7 +81,7 @@ export function AsideContent({
                     {relatedCalculators.map((calculator) => (
                         <li key={calculator.id}>
                             <Link
-                                className="text-sm lg:text-base text-blue-600 hover:text-blue-700 hover:underline"
+                                className="text-base text-blue-600 hover:text-blue-700 hover:underline"
                                 href={`/${categorySlug}/${calculator.slug}/${citySlug ?? ""}`}
                             >
                                 {calculator.listName}

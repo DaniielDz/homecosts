@@ -41,6 +41,9 @@ export function PriceInput({
             if (parts.length > 2) {
                 parts.pop()
             }
+            if (parts[1]?.length > 3) {
+                parts[1] = parts[1].slice(0, 3)
+            }
             text = parts.join(".")
             const num = parseFloat(text) || 0
             onChange(num)
@@ -62,7 +65,7 @@ export function PriceInput({
     const handleBlur = () => {
         setIsFocused(false)
         const num = typeof value === "string" ? parseFloat(value) || 0 : value
-        setDisplayValue(formatNumber(num,2))
+        setDisplayValue(formatNumber(num,3))
     }
 
     return (
