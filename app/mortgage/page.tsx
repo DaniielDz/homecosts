@@ -8,7 +8,6 @@ import { calculateMortgageResults, MortgageInputs, MortgageResults } from "./uti
 import MortgageGuide from "./ui/components/MortgageGuide"
 
 export default function MortgagePage() {
-    // Inputs
     const [price, setPrice] = useState(425000)
     const [downAmt, setDownAmt] = useState(85000)
     const [downPct, setDownPct] = useState(20)

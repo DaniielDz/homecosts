@@ -28,22 +28,18 @@ export function LinealChart({
 }: InteractiveLineChartProps) {
   const [activeIdx, setActiveIdx] = useState(data.length - 1)
 
-  // Reset active index when data changes
   useEffect(() => {
     setActiveIdx(data.length - 1)
   }, [data])
 
-  // Clamp index in range
   const idx = Math.max(0, Math.min(activeIdx, data.length - 1))
   const active = data[idx] || { date: "", principalPaid: 0, interestPaid: 0, loanBalance: 0 }
 
-  // Compute ticks
   const ticks = data
     .map((_, i) => i)
     .filter(i => i % tickIntervalMonths === 0)
     .map(i => data[i][xKey as keyof LineDatum])
 
-  // Format active date
   const activeDate = active.date
     ? new Date(`${active.date}-01`).toLocaleString("en-US", { month: "long", year: "numeric" })
     : ""
@@ -122,7 +118,6 @@ export function LinealChart({
         </CardContent>
       </Card>
 
-      {/* Interactive panel */}
       <div className="mt-4 w-full max-w-md mx-auto bg-white ">
         <div className="px-4 py-2 mt-6 mb-2 text-sm md:text-base text-right text-gray-900 font-semibold">
           As of {activeDate}

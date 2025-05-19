@@ -8,12 +8,10 @@ interface InputProps {
 }
 
 export function Input({ name, label, initialValue, onChange }: InputProps) {
-    // 1) Estado interno como string
     const [value, setValue] = useState<string>(
         initialValue !== undefined ? initialValue.toString() : ""
     );
 
-    // 2) Sincronizar cuando cambie initialValue desde el padre
     useEffect(() => {
         setValue(initialValue !== undefined ? initialValue.toString() : "");
     }, [initialValue]);

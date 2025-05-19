@@ -1,4 +1,3 @@
-// app/api/zip/route.ts
 import { supabase } from "@/app/lib/supabase";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -13,7 +12,6 @@ export async function GET(req: NextRequest) {
         );
     }
 
-    // Ajusta el nombre de la tabla si es distinto
     const { data, error } = await supabase
         .from("zipcodes_data")
         .select("slug")

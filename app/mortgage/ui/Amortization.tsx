@@ -16,7 +16,6 @@ export interface AmortizationProps {
     setExtraYearly: (value: number) => void;
     setOneTimeAmt: (value: number) => void;
     setOneTimeDate: (date: string) => void;
-    // New props
     schedule: ScheduleEntry[]
     summary: Summary
     lineChartData: LineDatum[]

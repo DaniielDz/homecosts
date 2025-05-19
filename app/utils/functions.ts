@@ -40,7 +40,6 @@ export function uc1({
     let slo = 0;
     let mb = false;
 
-    // Nueva lógica de inicialización de w3
     const calculatedW3 = 1 + 0.15 * (w1 - 1);
     const duv = guv(bq);
 
@@ -52,11 +51,9 @@ export function uc1({
         const currentIb = ib[i];
 
         if (ilp[i] === 0) {
-            // Lógica corregida para mq
             mq = Math.round(bq * vq[i] + fq[i] + qx);
             const uv = currentIb === '' ? duv : currentIb;
 
-            // Cálculo modificado con nuevo w3
             vl = mq * vmin[i] * calculatedW3 * w4;
             vh = mq * vmax[i] * calculatedW3 * w4;
 
@@ -70,7 +67,6 @@ export function uc1({
                 type: "mq",
             });
         } else {
-            // Lógica mejorada para el último ítem
             if (i < num_items - 1) {
                 lq = bq * vq[i] * ilp[i] + fq[i];
             } else {
@@ -82,7 +78,6 @@ export function uc1({
                 }
             }
 
-            // Cálculo corregido de valores
             vl = lq * vmin[i] * w1 * w2;
             vh = lq * vmax[i] * w1 * w2;
 
@@ -96,7 +91,6 @@ export function uc1({
             });
         }
 
-        // Condición de acumulación actualizada
         const shouldAccumulate = (
             (currentIb?.includes('%') === false && results[i]?.type === "lq") ||
             mb
@@ -104,29 +98,12 @@ export function uc1({
 
         if (shouldAccumulate) {
             th += lq;
-            // slo += vl;
-            // shi += vh;
         }
     }
 
-    // Nuevos cálculos de totales
-    // const totalLow = slo;
-    // const totalHigh = shi;
-    // const avgLow = bq >= 1 ? slo / bq : 0;
-    // const avgHigh = bq >= 1 ? shi / bq : 0;
 
     return results
 
-    // // Retorno modificado para incluir totales
-    // return {
-    //     results,
-    //     totals: {
-    //         low: totalLow,
-    //         high: totalHigh,
-    //         avgLow,
-    //         avgHigh
-    //     }
-    // };
 }
 
 export function addCommas(e: string): string {

@@ -1,27 +1,26 @@
 export interface MortgageInputs {
   price: number
-  downPayment: number    // amount
-  termYears: number      // in years
-  annualRate: number     // as percent (e.g. 6.333)
-  taxes: number          // monthly
-  insurance: number      // monthly
-  hoaFees: number        // monthly
+  downPayment: number    
+  termYears: number     
+  annualRate: number    
+  taxes: number         
+  insurance: number     
+  hoaFees: number       
 
-  startDate: string      // YYYY-MM for schedule start
-  extraMonthly?: number  // additional monthly payment
-  extraYearly?: number   // additional yearly payment on anniversary
-  oneTimeAmount?: number // one-time extra payment amount
-  oneTimeDate?: string   // YYYY-MM when one-time payment occurs
+  startDate: string      
+  extraMonthly?: number  
+  extraYearly?: number   
+  oneTimeAmount?: number
+  oneTimeDate?: string   
 }
 
 export interface ScheduleEntry {
-  date: string          // YYYY-MM
-  principal: number     // total principal paid this month (scheduled + extras)
-  interest: number      // interest paid this month
-  balance: number       // remaining balance after payment
+  date: string          
+  principal: number     
+  interest: number      
+  balance: number       
 }
 
-/** Datos para Pie Chart */
 export interface PieDatum {
   name: string
   value: number
@@ -139,7 +138,6 @@ export function calculateMortgageResults(
   const rawPayoffDate = lastScheduleEntry?.date ?? '';
 
 
-  // === ANUAL SUMMARY ===
   const yearMap = new Map<number, YearlySummary>();
   const lineChartData: LineDatum[] = [];
 

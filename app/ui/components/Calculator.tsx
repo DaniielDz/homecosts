@@ -108,7 +108,6 @@ export default function Calculator({
 
         switch (sliderId) {
           case 'slider-1':
-            // sólo si lv es array y tiene al menos un elemento
             if (Array.isArray(lv) && lv.length > 0) {
               const idx = Math.min(val, lv.length - 1);
               w2 = lv[idx];
@@ -282,11 +281,11 @@ export default function Calculator({
     } else if (calculator.type === "SELECTS_SLIDERS") {
       const { qt, rv, cv, qVal } = calculator.variables
       const computeQResult = computeQ({
-        qt: typeof qt === 'number' ? qt : 0, // Ensure qt is a number
-        rv: Array.isArray(rv) && rv.every(item => typeof item === 'number') ? rv : [], // Ensure rv is an array of numbers
-        cv: Array.isArray(cv) && cv.every(item => typeof item === 'number') ? cv : [], // Ensure cv is an array of numbers
-        selectValues: selectValues ?? [], // Ensure selectValues is an array of numbers
-        initialQVal: typeof qVal === 'number' ? qVal : 0, // Ensure qVal is a number
+        qt: typeof qt === 'number' ? qt : 0, 
+        rv: Array.isArray(rv) && rv.every(item => typeof item === 'number') ? rv : [], 
+        cv: Array.isArray(cv) && cv.every(item => typeof item === 'number') ? cv : [], 
+        selectValues: selectValues ?? [], 
+        initialQVal: typeof qVal === 'number' ? qVal : 0
       });
 
       let res;

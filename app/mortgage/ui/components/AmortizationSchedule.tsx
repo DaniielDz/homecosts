@@ -5,7 +5,7 @@ import React, { useState, useMemo } from "react"
 import { formatNumber } from "../../utils/formatNumber"
 
 interface ScheduleEntry {
-    date: string // YYYY-MM format
+    date: string 
     principal: number
     interest: number
     balance: number
@@ -34,7 +34,7 @@ export function AmortizationSchedule({
 
     const lastPayment = useMemo(() => {
         if (!schedule.length) return ""
-        const last = schedule[schedule.length - 1].date  // "2026-01"
+        const last = schedule[schedule.length - 1].date  
         const [y, m] = last.split("-").map(Number)
         const dLocal = new Date(y, m - 1, 1)
         return dLocal.toLocaleString("en-US", {
@@ -59,7 +59,6 @@ export function AmortizationSchedule({
 
 
 
-    // Toggle a single year
     const toggleYear = (year: string) => {
         const next = new Set(expandedYears)
         if (expandedYears.has(year)) next.delete(year)
@@ -67,7 +66,6 @@ export function AmortizationSchedule({
         setExpandedYears(next)
     }
 
-    // Effect: when expandAll changes, update expandedYears
     React.useEffect(() => {
         if (expandAll) {
             setExpandedYears(new Set(grouped.keys()))

@@ -22,7 +22,6 @@ export default async function CalculatorPage(props: { params: Params }) {
         const result = await getCalculator(categorySlug, calculatorSlug);
         ({ categoryData, subCategoryData, fullCalculator, relatedCalculators } = result);
     } catch (error) {
-        // Render error state
         return (
             <div className="p-4 text-red-600">
                 {(error as Error).message}

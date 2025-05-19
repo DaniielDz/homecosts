@@ -14,7 +14,6 @@ export async function getCalculator(
     categorySlug: string,
     calculatorSlug: string
 ): Promise<CalculatorResult> {
-    // 1. Obtener la categoría
     const { data: categoryData, error: categoryError } = await supabase
         .from("categories")
         .select("*")
@@ -25,7 +24,6 @@ export async function getCalculator(
         throw new Error("Error loading category");
     }
 
-    // 2. Subcategorías de la categoría
     const { data, error: subCategoriesError } = await supabase
         .from("subcategories")
         .select("id, name")
@@ -39,7 +37,6 @@ export async function getCalculator(
 
     const subCategoryIds = subCategoriesData.map((sub: SubCategory) => sub.id);
 
-    // 3. Buscar la calculadora
     const { data: baseData, error: baseError } = await supabase
         .from("calculators")
         .select("*")
@@ -53,7 +50,6 @@ export async function getCalculator(
 
     let fullCalculator: AnyCalculator = baseData;
 
-    // 4. Obtener datos específicos según el tipo
     if (baseData.type === "NORMAL") {
         const { data, error } = await supabase
             .from("normal")
@@ -83,7 +79,6 @@ export async function getCalculator(
         fullCalculator = { ...baseData, ...data };
     }
 
-    // 5. Obtener la subcategoría exacta
     const { data: subCategoryData, error: subCategoryError } = await supabase
         .from("subcategories")
         .select("*")
@@ -94,7 +89,6 @@ export async function getCalculator(
         throw new Error("Error loading calculator subcategory");
     }
 
-    // SEGUN LA SUBCATEGORIA OBTENER TODAS LAS CALCULADORAS RELACIONADAS
     const { data: relatedCalculators, error: relatedError } = await supabase
         .from("calculators")
         .select("*")

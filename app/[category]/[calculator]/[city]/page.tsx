@@ -8,7 +8,7 @@ import { AsideContent } from "../ui/AsideContent";
 import Breadcrumb from "@/app/ui/components/BreadCrumb";
 
 export const dynamic = "force-dynamic";
-export const revalidate = 86400; // cache 24 h
+export const revalidate = 86400; 
 
 type Params = Promise<{ category: string, calculator: string, city: string }>
 

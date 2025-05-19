@@ -80,7 +80,7 @@ export default function SearchForm({ categories, subcategories }: SearchFormProp
     };
 
     return (
-        <>
+        <div className="w-full h-24 flex flex-col items-center gap-2">
             <div
                 className="w-full h-max md:h-11 flex flex-col md:flex-row items-center gap-2 max-w-2xl mx-auto mt-4 md:bg-white rounded-lg shadow-md md:max-w-200"
             >
@@ -113,9 +113,9 @@ export default function SearchForm({ categories, subcategories }: SearchFormProp
                         <SelectValue placeholder="Choose Project Type" />
                     </SelectTrigger>
 
-                    <SelectContent side="bottom" className="bg-white h-45 lg:h-70">
+                    <SelectContent side="bottom" className="cursor-pointer bg-white h-45 lg:h-70">
                         {filteredCalcs.map(calculator => (
-                            <SelectItem key={calculator.id} value={calculator.listName}>
+                            <SelectItem className="cursor-pointer" key={calculator.id} value={calculator.listName}>
                                 {calculator.listName}
                             </SelectItem>
                         ))}
@@ -127,6 +127,7 @@ export default function SearchForm({ categories, subcategories }: SearchFormProp
                     type="text"
                     placeholder="ZIP Code"
                     value={zip}
+                    maxLength={5}
                     onChange={(e) => setZip(e.target.value)}
                     className="text-gray-900 text-sm px-4 md:px-1 py-2 w-full max-w-80 h-11 lg:h-full rounded bg-white md:max-w-36 focus:outline-none"
                 />
@@ -143,7 +144,7 @@ export default function SearchForm({ categories, subcategories }: SearchFormProp
                     <p className="text-red-500 text-sm font-bold py-1 px-2 bg-white rounded-sm">{errorMsg}</p>
                 )
             }
-        </>
+        </div>
     );
 }
 

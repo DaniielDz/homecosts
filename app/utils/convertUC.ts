@@ -60,10 +60,8 @@ export const convertUCtoTS = (
         const calculation = new Function(
             'vars', 'iv', 'mq', 'f0', 'vm',
             `
-            // Variables internas
             let s1 = 0, s2 = 0, lq = 0, z1 = 0, z2 = 0, p1 = 0;
             
-            // Destructuring con valores por defecto
             const { 
             w1, 
             w2,
@@ -79,7 +77,6 @@ export const convertUCtoTS = (
             z
             } = vars;
     
-            // Recuperar variables de UI desde el closure
             let u11 = '', u12 = '', u13 = '';
             let v11 = '', v12 = '', v13 = '', v22 = '', v23 = '';
             let z12 = '', z13 = '';
@@ -91,7 +88,6 @@ export const convertUCtoTS = (
             throw new Error(\`Error en cálculo: \${e.message}\`);
             }
 
-            // Devolver resultados actualizados
             return [
                 { v11, v12, v13 },
                 { u11, u12, u13 },

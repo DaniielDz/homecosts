@@ -114,7 +114,7 @@ function ItemDesc({ title, desc }: { title: string, desc: string }) {
     return (
         <div className="flex flex-col gap-1">
             <h4 className="text-gray-900">{title}</h4>
-            <p className="text-[#6B7280] text-sm md:text-base text-wrap w-54 md:w-full md:pr-11">{desc}</p>
+            <p className="text-[#6B7280] text-sm text-wrap w-54 md:w-full md:pr-11">{desc}</p>
         </div>
     )
 }

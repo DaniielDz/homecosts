@@ -1,10 +1,8 @@
-// Nueva interfaz:
 interface CheckboxProps {
     checked: boolean;
     onChange: () => void;
 }
 
-// Componente modificado:
 export function Checkbox({ checked, onChange }: CheckboxProps) {
     return (
         <label className="inline-flex items-center cursor-pointer pt-0.5 md:pt-1">
