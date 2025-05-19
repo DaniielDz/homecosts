@@ -47,6 +47,7 @@ export interface Calculator {
     items: Item[] | Table_Item[];
     summarycontent: summaryList[];
     faqs: FAQ[];
+    notes: string;
 }
 
 export interface NormalCalculator extends Calculator {

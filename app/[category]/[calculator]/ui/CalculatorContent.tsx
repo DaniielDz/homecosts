@@ -88,6 +88,7 @@ export default function CalculatorContent({
                 lowCost={lowCost}
                 qtyLabel={qtyLabel}
                 qty={qty}
+                notes={calculator.notes}
             />
 
             {
